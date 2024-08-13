@@ -12,4 +12,4 @@ The latest release build can be downloaded from [GitHub](https://github.com/Roka
 
 - Unity `2022.3.22f1`, install via [Unity Hub](https://unity3d.com/get-unity/download) with [Android Build Support](https://docs.unity3d.com/Manual/android-sdksetup.html)
 - [Rider](https://www.jetbrains.com/rider) or [Visual Studio](https://visualstudio.microsoft.com)
-- [Git](https://git-scm.com/downloads) (with Git LFS)
+- [Git](https://git-scm.com/downloads)
