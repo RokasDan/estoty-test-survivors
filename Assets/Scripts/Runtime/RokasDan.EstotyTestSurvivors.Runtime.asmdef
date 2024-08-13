@@ -1,0 +1,21 @@
+{
+    "name": "RokasDan.EstotyTestSurvivors.Runtime",
+    "rootNamespace": "RokasDan.EstotyTestSurvivors.Runtime",
+    "references": [
+        "GUID:657a947e101921d449bae89670a00ec1",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:029c1c1b674aaae47a6841a0b89ad80e",
+        "GUID:dc47925d1a5fa2946bdd37746b2b5d48",
+        "GUID:16a35b22bcb3d68408bec3de04e2d6ca",
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
