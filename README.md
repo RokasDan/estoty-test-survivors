@@ -2,7 +2,7 @@
 
 [![Unity 2022.3.22f1](https://img.shields.io/badge/unity-2022.3.22f1%2B-blue.svg)](https://unity3d.com/get-unity/download)
 
-Survivor's-like shooter mobile game, made with Unity.
+Survivor's-like shooter mobile game, made with Unity
 
 ## Releases
 
