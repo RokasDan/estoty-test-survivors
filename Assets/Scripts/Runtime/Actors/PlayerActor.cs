@@ -27,6 +27,8 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
         {
             playerMovement.Move(transform, playerInput.GetPlayerDirection(), moveSpeed);
         }
+
+        public Transform PlayerTransform => transform;
     }
 }
 
