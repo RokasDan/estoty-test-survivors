@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Input;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Locomotion;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Triggers;
@@ -27,6 +28,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
         private IMovement playerMovement;
         private IPlayerInput playerInput;
         private Transform enemyTransform;
+        private readonly List<Transform> enemies = new List<Transform>();
         private bool isPlayerInverted;
 
         private void Awake()
@@ -42,8 +44,9 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
             playerMovement.Move(transform, playerDirection, moveSpeed);
             animator.SetBool("IsMoving", IsPlayerMoving(playerDirection));
             animator.SetBool("IsMovingBackwards", IsPlayerMovingBackwards(playerDirection));
+            enemyTransform = GetClosestEnemy();
             InvertPlayer(playerDirection);
-            RotateGunArm(enemyTransform, isPlayerInverted);
+            RotateGunArm(isPlayerInverted);
         }
 
         private bool IsPlayerMoving(Vector2 direction)
@@ -76,11 +79,11 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
             }
             return false;
         }
-        private void RotateGunArm(Transform targetTransform, bool isInverted)
+        private void RotateGunArm(bool isInverted)
         {
-            if (targetTransform)
+            if (enemyTransform)
             {
-                var position = targetTransform.position;
+                var position = enemyTransform.position;
                 var direction = position - weapon.position;
                 var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 if (isInverted)
@@ -89,6 +92,33 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
                 }
                 weapon.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
             }
+        }
+
+        private void ResetGunRotation()
+        {
+            weapon.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+
+        private Transform GetClosestEnemy()
+        {
+            if (enemies.Count != 0)
+            {
+                Transform closestEnemy = null;
+                var closestDistanceSqr = Mathf.Infinity;
+                var playerPosition = transform.position;
+                foreach (Transform enemy in enemies)
+                {
+                    var directionToEnemy = enemy.position - playerPosition;
+                    var distanceSqrToEnemy = directionToEnemy.sqrMagnitude;
+                    if (distanceSqrToEnemy < closestDistanceSqr)
+                    {
+                        closestDistanceSqr = distanceSqrToEnemy;
+                        closestEnemy = enemy;
+                    }
+                }
+                return closestEnemy;
+            }
+            return default;
         }
 
         private void OnEnable()
@@ -108,14 +138,21 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
             var enemy = args.Collider.transform;
             if (enemy)
             {
-                enemyTransform = enemy;
+                enemies.Add(enemy);
             }
         }
 
         private void OnEnemyExitTrigger(ColliderExitedArgs args)
         {
-            enemyTransform = null;
-            weapon.transform.rotation = Quaternion.Euler(0, 0, 0);
+            var enemy = args.Collider.transform;
+            if (enemy)
+            {
+                enemies.Remove(enemy);
+            }
+            if (enemies.Count == 0)
+            {
+                ResetGunRotation();
+            }
         }
 
         private void InvertPlayer(Vector2 joystickInput)
