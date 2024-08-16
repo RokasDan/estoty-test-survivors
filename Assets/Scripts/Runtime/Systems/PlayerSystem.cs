@@ -19,11 +19,14 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
 
         public void Start()
         {
-            playerInstance = objectResolver.Instantiate(
-                playerActorPrefab,
-                Vector3.zero,
-                Quaternion.identity
-            );
+            if (!TryGetPlayer(out var player))
+            {
+                playerInstance = objectResolver.Instantiate(
+                    playerActorPrefab,
+                    Vector3.zero,
+                    Quaternion.identity
+                );
+            }
         }
 
         public bool TryGetPlayer(out IPlayerActor player)
