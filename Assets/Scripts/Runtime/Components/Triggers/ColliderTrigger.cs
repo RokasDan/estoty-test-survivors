@@ -7,6 +7,10 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Triggers
 {
     internal sealed class ColliderTrigger : MonoBehaviour
     {
+        [Required]
+        [SerializeField]
+        private CircleCollider2D circleCollider;
+
         [SerializeField]
         private bool isFilterByLayerMask;
 
@@ -85,6 +89,11 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Triggers
             {
                 onTriggerExited.Invoke(args);
             }
+        }
+
+        public CircleCollider2D CircleCollider
+        {
+            get { return circleCollider; }
         }
     }
 }

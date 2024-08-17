@@ -4,9 +4,9 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Locomotion
 {
     internal sealed class VariableSpeedMovement : IMovement
     {
-        public void Move(Transform transform, Vector2 direction, float speed)
+        public void Move(Transform actorTransform, Vector2 direction, float speed)
         {
-            transform.Translate(direction * (speed * Time.deltaTime));
+            actorTransform.Translate(direction * (speed * Time.deltaTime));
         }
     }
 }

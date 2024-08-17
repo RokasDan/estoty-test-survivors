@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b856e7a37168463f9e47e03f6628af5f, type: 3}
+  m_Name: Zombie_Actor_Data
+  m_EditorClassIdentifier: 
+  enemyName: Zombie Actor
+  maxHealth: 0
+  attackDamage: 0
+  attackRange: 0.8
+  attackSpeed: 2
+  moveSpeed: 2
+  spawnRate: 3
