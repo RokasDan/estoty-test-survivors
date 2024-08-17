@@ -1,12 +1,18 @@
-﻿using NaughtyAttributes;
+﻿using System;
+using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Triggers;
 using RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.Enemies;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
 {
     internal sealed class EnemyActor : MonoBehaviour, IEnemyActor
     {
+        [Required]
+        [SerializeField]
+        private Rigidbody2D rigidBody;
+
         [Required]
         [SerializeField]
         private Animator enemyAnimation;
@@ -23,7 +29,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
         [SerializeField]
         private ColliderTrigger attackTrigger;
 
-        private Transform player;
+        private IPlayerActor playerActor;
         private int currentHealth;
         private bool playerInRange;
         private float lastAttack;
@@ -48,27 +54,43 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
 
         private void Update()
         {
-            IPlayerActor playerActor = FindObjectOfType<PlayerActor>();
-            if (playerActor != null)
+            if (playerActor is { IsPlayerDead: false })
             {
-                player = playerActor.PlayerTransform;
-            }
-            else
-            {
-                Debug.LogWarning("No IPlayerActor found in the scene.");
-            }
-
-            if (player)
-            {
-                Move(transform ,player.position ,enemyData.moveSpeed);
                 FlipEnemySprite();
                 AttackPlayer(playerActor);
             }
         }
 
+        private void FixedUpdate()
+        {
+            if (playerActor is { IsPlayerDead: false })
+            {
+                var direction = (playerActor.PlayerTransform.position - transform.position).normalized;
+                Move(transform, direction, enemyData.moveSpeed);
+            }
+            else
+            {
+                Decelerate(enemyData.moveSpeed);
+            }
+        }
+
         public void Move(Transform actorTransform, Vector2 direction, float speed)
         {
-            actorTransform.position = Vector2.MoveTowards(actorTransform.position, direction, speed * Time.deltaTime);
+            var targetVelocity = direction.normalized * speed;
+            rigidBody.velocity = Vector2.Lerp(rigidBody.velocity, targetVelocity, Time.fixedDeltaTime * 10f);
+        }
+
+        public void Decelerate(float speed)
+        {
+            if (rigidBody.velocity.magnitude > 0.01f)
+            {
+                var deceleration = rigidBody.velocity.normalized * (speed * Time.fixedDeltaTime);
+                rigidBody.velocity = Vector2.MoveTowards(rigidBody.velocity, Vector2.zero, deceleration.magnitude);
+            }
+            else
+            {
+                rigidBody.velocity = Vector2.zero;
+            }
         }
 
         public void DamageEnemy(int damage)
@@ -76,9 +98,9 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
             throw new System.NotImplementedException();
         }
 
-        public void SetPlayerLocation(IPlayerActor playerActor)
+        public void SetPlayerLocation(IPlayerActor player)
         {
-            player = playerActor.PlayerTransform;
+            this.playerActor = player;
         }
 
         public int GetRarityLevel()
@@ -86,12 +108,13 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
             return enemyData.spawnRarity;
         }
 
-        public void AttackPlayer(IPlayerActor playerActor)
+        public void AttackPlayer(IPlayerActor player)
         {
             if (playerInRange && Time.time >= lastAttack + enemyData.attackSpeed)
             {
                 enemyAnimation.SetTrigger("Hit");
                 lastAttack = Time.time;
+                player.DamagePlayer(enemyData.attackDamage);
             }
         }
 
@@ -102,7 +125,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
             {
                 return;
             }
-            Debug.Log("Player found");
             playerInRange = true;
         }
 
@@ -118,9 +140,9 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
 
         public void FlipEnemySprite()
         {
-            if (player)
+            if (playerActor != null)
             {
-                bool playerOnRight = player.position.x > transform.position.x;
+                bool playerOnRight = playerActor.PlayerTransform.position.x > transform.position.x;
                 enemySprite.flipX = !playerOnRight;
             }
         }

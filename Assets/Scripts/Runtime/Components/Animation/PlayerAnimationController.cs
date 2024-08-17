@@ -17,6 +17,11 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Animation
             animator.SetBool("IsMovingBackwards", IsPlayerMovingBackwards(playerDirection, enemyTransform, playerPosition));
         }
 
+        public void ShowPlayerDeath()
+        {
+            animator.SetBool("IsDead", true);
+        }
+
         private bool IsPlayerMoving(Vector2 direction)
         {
             return Mathf.Abs(direction.y) > 0 || Mathf.Abs(direction.x) > 0;

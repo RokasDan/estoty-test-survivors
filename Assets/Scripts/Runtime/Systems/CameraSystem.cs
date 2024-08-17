@@ -36,7 +36,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
             return true;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (playerSystem.TryGetPlayer(out var player))
             {

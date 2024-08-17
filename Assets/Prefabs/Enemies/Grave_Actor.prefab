@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2640fca8b6a4a0282b57f60d514ad6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidBody: {fileID: 6664877737170854564}
   enemyAnimation: {fileID: 2455276030823615790}
   enemySprite: {fileID: 4520004590190731863}
   enemyData: {fileID: 11400000, guid: c101095322903674b9561b674d514481, type: 2}

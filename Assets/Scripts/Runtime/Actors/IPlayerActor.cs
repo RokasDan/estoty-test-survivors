@@ -1,9 +1,20 @@
-﻿using UnityEngine;
+﻿using System;
+using RokasDan.EstotyTestSurvivors.Runtime.Components.Locomotion;
+using UnityEngine;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
 {
-    internal interface IPlayerActor
+    internal interface IPlayerActor: IMovement
     {
+        public void DamagePlayer(int damage);
+        public void KillPlayer();
+        public bool IsPlayerDead { get; }
         public Transform PlayerTransform { get; }
+        public int MaxPlayerHealth { get; }
+        public int CurrentPlayerHealth { get; }
+        public int CurrentPlayerExperience { get; }
+        public int BulletCount { get; }
+        public int ScoreCount { get; }
+        public event Action OnStatsChanged;
     }
 }

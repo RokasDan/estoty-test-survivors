@@ -2,6 +2,7 @@
 using RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.EnemySystem;
 using RokasDan.EstotyTestSurvivors.Runtime.Systems;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 
@@ -18,6 +19,11 @@ namespace RokasDan.EstotyTestSurvivors.Runtime
         [SerializeField]
         private CameraSystem cameraSystem;
 
+        [FormerlySerializedAs("hudSystem")]
+        [Required]
+        [SerializeField]
+        private CanvasSystem canvasSystem;
+
         [Header("Settings")]
         [Required]
         [SerializeField]
@@ -27,6 +33,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime
         {
             builder.RegisterComponent(playerSystem).AsImplementedInterfaces();
             builder.RegisterComponent(cameraSystem).AsImplementedInterfaces();
+            builder.RegisterComponent(canvasSystem).AsImplementedInterfaces();
             builder.RegisterInstance(enemySystemSettings).AsSelf();
             builder.Register<EnemySystem>(Lifetime.Singleton).AsImplementedInterfaces();
         }
