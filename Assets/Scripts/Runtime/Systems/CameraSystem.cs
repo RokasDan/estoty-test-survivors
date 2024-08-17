@@ -24,6 +24,18 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
             mainCamera.transform.position = Vector3.SmoothDamp(mainCamera.transform.position, offsetTarget, ref velocity, dampening);
         }
 
+        public bool TryGetCamera(out Camera targetCamera)
+        {
+            if (mainCamera == false)
+            {
+                targetCamera = default;
+                return false;
+            }
+
+            targetCamera = mainCamera;
+            return true;
+        }
+
         private void Update()
         {
             if (playerSystem.TryGetPlayer(out var player))

@@ -1,5 +1,4 @@
-﻿using System;
-using NaughtyAttributes;
+﻿using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Triggers;
 using RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.Enemies;
 using UnityEngine;
@@ -77,11 +76,20 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
             throw new System.NotImplementedException();
         }
 
+        public void SetPlayerLocation(IPlayerActor playerActor)
+        {
+            player = playerActor.PlayerTransform;
+        }
+
+        public int GetRarityLevel()
+        {
+            return enemyData.spawnRarity;
+        }
+
         public void AttackPlayer(IPlayerActor playerActor)
         {
             if (playerInRange && Time.time >= lastAttack + enemyData.attackSpeed)
             {
-                Debug.Log("Hitting Player");
                 enemyAnimation.SetTrigger("Hit");
                 lastAttack = Time.time;
             }
@@ -105,7 +113,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
             {
                 return;
             }
-            Debug.Log("Player Lost");
             playerInRange = false;
         }
 
