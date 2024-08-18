@@ -218,6 +218,7 @@ GameObject:
   m_Component:
   - component: {fileID: 895041279497867241}
   - component: {fileID: 9212398751657985225}
+  - component: {fileID: 5772265358069828567}
   m_Layer: 6
   m_Name: BodyCollider
   m_TagString: Untagged
@@ -275,6 +276,122 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &5772265358069828567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7036240126659472612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4911c445f6d4fc59c5ed5f0311d00ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  circleCollider: {fileID: 9212398751657985225}
+  isFilterByLayerMask: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  isInvokeUnityEvents: 0
+  onTriggerEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerExited:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &7524615063716304962
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2461537680446076172}
+  - component: {fileID: 423872475169855888}
+  - component: {fileID: 265918684990201257}
+  m_Layer: 8
+  m_Name: CollectableAttraktor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2461537680446076172
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7524615063716304962}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9169269249861452900}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &423872475169855888
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7524615063716304962}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 2
+--- !u!114 &265918684990201257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7524615063716304962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4911c445f6d4fc59c5ed5f0311d00ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  circleCollider: {fileID: 423872475169855888}
+  isFilterByLayerMask: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  isInvokeUnityEvents: 0
+  onTriggerEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerExited:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7881951576476301675
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,6 +427,7 @@ Transform:
   m_Children:
   - {fileID: 3849975873438772360}
   - {fileID: 895041279497867241}
+  - {fileID: 2461537680446076172}
   - {fileID: 1737578154698321022}
   - {fileID: 8891325664579815492}
   m_Father: {fileID: 0}
@@ -408,6 +526,8 @@ MonoBehaviour:
   rigidBody: {fileID: 4491513928397541927}
   moveSpeed: 3
   enemyTrigger: {fileID: 3290261619846968371}
+  playerBodyTrigger: {fileID: 5772265358069828567}
+  collectableTrigger: {fileID: 265918684990201257}
   weaponRotation: {fileID: 8891325664579815492}
   weapon: {fileID: 6795876234640676230}
   fireSpeed: 2

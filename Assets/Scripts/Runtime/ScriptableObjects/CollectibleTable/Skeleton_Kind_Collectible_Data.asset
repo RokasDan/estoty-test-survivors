@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cc91981d081405a9d834bd009f7e36f, type: 3}
+  m_Name: Skeleton_Kind_Collectible_Data
+  m_EditorClassIdentifier: 
+  collectibles:
+  - collectiblePrefab: {fileID: 910969115733995407, guid: 84ac51d455da077429710d1680e487bc, type: 3}
+    dropChance: 0.84
+    minQuantity: 10
+    maxQuantity: 10
+  - collectiblePrefab: {fileID: 8384593376701562610, guid: af0caa91c5fc9e14ca8c117e4f64bd74, type: 3}
+    dropChance: 0.56
+    minQuantity: 5
+    maxQuantity: 7
+  - collectiblePrefab: {fileID: 6652407020408288854, guid: ca36d0c228ff8af49b572836482de376, type: 3}
+    dropChance: 0.497
+    minQuantity: 3
+    maxQuantity: 5

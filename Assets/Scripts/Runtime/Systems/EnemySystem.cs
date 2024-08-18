@@ -20,7 +20,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
         private float enemySpawnRate;
         private float spawnTimer;
         private int maxEnemyCount;
-        private readonly List<EnemyActor> aliveEnemies = new List<EnemyActor>();
+        private readonly List<IEnemyActor> aliveEnemies = new List<IEnemyActor>();
 
         public EnemySystem(IPlayerSystem playerSystem, EnemySystemSettings enemySystemSettings, ICameraSystem cameraSystem)
         {
@@ -59,12 +59,12 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
             TrackEnemy(enemyActor);
         }
 
-        public void TrackEnemy(EnemyActor enemyActor)
+        public void TrackEnemy(IEnemyActor enemyActor)
         {
             aliveEnemies.Add(enemyActor);
         }
 
-        public void UntrackEnemy(EnemyActor enemyActor)
+        public void UntrackEnemy(IEnemyActor enemyActor)
         {
             aliveEnemies.Remove(enemyActor);
         }
@@ -89,5 +89,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
             }
             return enemyPrefabs.FirstOrDefault();
         }
+
+        public List<IEnemyActor> AliveEnemies => aliveEnemies;
     }
 }

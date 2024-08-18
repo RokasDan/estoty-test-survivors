@@ -3,7 +3,7 @@
     internal interface ICanvasSystem
     {
         public void UpdateHealth(int currentHealth, int maxHealth);
-        public void UpdateExperience(int currentExperience);
+        public void UpdateExperience(int currentExperience, int maxExperience);
         public void UpdateKillCount(int count);
         public void UpdatedBulletCount(int bullets);
     }

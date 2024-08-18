@@ -1,11 +1,16 @@
 ﻿using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Actors.Projectiles;
 using UnityEngine;
+using VContainer;
+using VContainer.Unity;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Weapons
 {
     internal sealed class WeaponActor : MonoBehaviour, IWeaponActor
     {
+        [Inject]
+        private IObjectResolver objectResolver;
+
         [Required]
         [SerializeField]
         private SpriteRenderer weapon;
@@ -25,8 +30,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Weapons
             {
                 weaponAngle = Quaternion.Euler(0, 0, projectileExit.eulerAngles.z + 90);
             }
-            var bullet = Instantiate(projectile, projectileExit.position, weaponAngle);
-            bullet.SetProjectileStats(damage, pushForce);
+            objectResolver.Instantiate(projectile, projectileExit.position, weaponAngle);
         }
     }
 }

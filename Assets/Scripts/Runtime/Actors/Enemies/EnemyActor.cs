@@ -1,6 +1,7 @@
 ﻿using System;
 using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Triggers;
+using RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.CollectibleSystem;
 using RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.Enemies;
 using RokasDan.EstotyTestSurvivors.Runtime.Systems;
 using UnityEngine;
@@ -16,6 +17,9 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
 
         [Inject]
         private IPlayerSystem playerSystem;
+
+        [Inject]
+        private CollectibleSystem collectibleSystem;
 
         [Required]
         [SerializeField]
@@ -37,19 +41,29 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
         [SerializeField]
         private ColliderTrigger attackTrigger;
 
+        [Required]
+        [SerializeField]
+        private CollectibleTableData collectibleTable;
+
         private IPlayerActor playerActor;
         private int currentHealth;
+        private float lootDropRadius;
         private bool playerInRange;
         private float lastAttack;
         private bool enemyIsAlive;
 
         private void Awake()
         {
+            if (!enemySystem.AliveEnemies.Contains(this))
+            {
+                enemySystem.TrackEnemy(this);
+            }
             if (playerSystem.TryGetPlayer(out var player))
             {
                 playerActor = player;
             }
             currentHealth = enemyData.maxHealth;
+            lootDropRadius = enemyData.lootDropRadius;
             attackTrigger.CircleCollider.radius = enemyData.attackRange;
             enemyIsAlive = true;
         }
@@ -60,7 +74,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
             attackTrigger.OnTriggerExited += LosePlayer;
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             attackTrigger.OnTriggerEntered -= DetectPlayer;
             attackTrigger.OnTriggerExited -= LosePlayer;
@@ -79,22 +93,22 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
             if (playerActor is { IsPlayerDead: false } && enemyIsAlive)
             {
                 var direction = (playerActor.PlayerTransform.position - transform.position).normalized;
-                Move(transform, direction, enemyData.moveSpeed);
+                Move(direction, enemyData.moveSpeed);
                 AttackPlayer(playerActor);
             }
             else
             {
-                Decelerate(enemyData.moveSpeed);
+                Decelerate();
             }
         }
 
-        public void Move(Transform actorTransform, Vector2 direction, float speed)
+        public void Move(Vector2 direction, float speed)
         {
             var targetVelocity = direction.normalized * speed;
             rigidBody.velocity = Vector2.Lerp(rigidBody.velocity, targetVelocity, Time.fixedDeltaTime * 10f);
         }
 
-        public void Decelerate(float speed)
+        public void Decelerate()
         {
             rigidBody.velocity = Vector2.Lerp(rigidBody.velocity, Vector2.zero, 15 * Time.deltaTime);
             if (rigidBody.velocity.magnitude < 0.1f)
@@ -118,7 +132,11 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
             {
                 child.gameObject.SetActive(false);
             }
+
+            playerActor.CurrentScoreCount += 1;
+            playerActor.OnStatsChanged?.Invoke();
             enemySystem.UntrackEnemy(this);
+            collectibleSystem.SpawnCollectables(collectibleTable, transform.position, lootDropRadius);
             enemyAnimation.SetBool("Dead", true);
             enemyIsAlive = false;
             Destroy(gameObject, 5f);

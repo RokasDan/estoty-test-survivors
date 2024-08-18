@@ -19,10 +19,13 @@ namespace RokasDan.EstotyTestSurvivors.Runtime
         [SerializeField]
         private CameraSystem cameraSystem;
 
-        [FormerlySerializedAs("hudSystem")]
         [Required]
         [SerializeField]
         private CanvasSystem canvasSystem;
+
+        [Required]
+        [SerializeField]
+        private CollectibleSystem collectibleSystem;
 
         [Header("Settings")]
         [Required]
@@ -34,6 +37,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime
             builder.RegisterComponent(playerSystem).AsImplementedInterfaces();
             builder.RegisterComponent(cameraSystem).AsImplementedInterfaces();
             builder.RegisterComponent(canvasSystem).AsImplementedInterfaces();
+            builder.RegisterComponent(collectibleSystem).AsImplementedInterfaces();
             builder.RegisterInstance(enemySystemSettings).AsSelf();
             builder.Register<EnemySystem>(Lifetime.Singleton).AsImplementedInterfaces();
         }

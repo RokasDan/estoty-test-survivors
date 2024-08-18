@@ -20,3 +20,4 @@ MonoBehaviour:
   pushForce: 15
   moveSpeed: 3
   spawnRarity: 10
+  lootDropRadius: 1

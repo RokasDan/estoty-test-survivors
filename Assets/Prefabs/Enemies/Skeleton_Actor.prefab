@@ -222,6 +222,7 @@ MonoBehaviour:
   enemySprite: {fileID: 4679561385154999810}
   enemyData: {fileID: 11400000, guid: 3704b45e809acb3448e78d5d8869aab7, type: 2}
   attackTrigger: {fileID: 4502784269711935096}
+  collectibleTable: {fileID: 11400000, guid: 76377542aecf84847a822a6cead37831, type: 2}
 --- !u!1 &3664382205558754316
 GameObject:
   m_ObjectHideFlags: 0
