@@ -5,11 +5,18 @@ using RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.Enemies;
 using RokasDan.EstotyTestSurvivors.Runtime.Systems;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using VContainer;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
 {
     internal sealed class EnemyActor : MonoBehaviour, IEnemyActor
     {
+        [Inject]
+        private IEnemySystem enemySystem;
+
+        [Inject]
+        private IPlayerSystem playerSystem;
+
         [Required]
         [SerializeField]
         private Rigidbody2D rigidBody;
@@ -31,7 +38,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
         private ColliderTrigger attackTrigger;
 
         private IPlayerActor playerActor;
-        private EnemySystem enemySystem;
         private int currentHealth;
         private bool playerInRange;
         private float lastAttack;
@@ -39,6 +45,10 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
 
         private void Awake()
         {
+            if (playerSystem.TryGetPlayer(out var player))
+            {
+                playerActor = player;
+            }
             currentHealth = enemyData.maxHealth;
             attackTrigger.CircleCollider.radius = enemyData.attackRange;
             enemyIsAlive = true;
@@ -112,11 +122,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
             enemyAnimation.SetBool("Dead", true);
             enemyIsAlive = false;
             Destroy(gameObject, 5f);
-        }
-
-        public void SetPlayerLocation(IPlayerActor player)
-        {
-            this.playerActor = player;
         }
 
         public void AddEnemySystem(EnemySystem system)

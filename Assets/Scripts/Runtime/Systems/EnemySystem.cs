@@ -16,7 +16,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
         private readonly EnemySystemSettings enemySystemSettings;
         private readonly IPlayerSystem playerSystem;
         private readonly ICameraSystem cameraSystem;
-        private float spawnAreaWidth;
+        private int spawnAreaOffset;
         private float enemySpawnRate;
         private float spawnTimer;
         private int maxEnemyCount;
@@ -31,7 +31,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
 
         public void Start()
         {
-            spawnAreaWidth = enemySystemSettings.spawnAreaWidth;
+            spawnAreaOffset = enemySystemSettings.spawnAreaOffset;
             enemySpawnRate = enemySystemSettings.enemySpawnRate;
             maxEnemyCount = enemySystemSettings.initialEnemyCount;
             spawnTimer = enemySpawnRate;
@@ -54,14 +54,9 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
             {
                 return;
             }
-            var spawnPosition = GetRandomSpawnPosition();
+            var spawnPosition = cameraSystem.GetOutsideCameraPosition(spawnAreaOffset);
             var enemyActor = objectResolver.Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
             TrackEnemy(enemyActor);
-            if (playerSystem.TryGetPlayer(out var player))
-            {
-                enemyActor.AddEnemySystem(this);
-                enemyActor.SetPlayerLocation(player);
-            }
         }
 
         public void TrackEnemy(EnemyActor enemyActor)
@@ -72,24 +67,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
         public void UntrackEnemy(EnemyActor enemyActor)
         {
             aliveEnemies.Remove(enemyActor);
-        }
-
-        public Vector2 GetRandomSpawnPosition()
-        {
-            if (cameraSystem.TryGetCamera(out var targetCamera))
-            {
-                if (targetCamera == null)
-                {
-                    return Vector2.zero;
-                }
-                var cameraPosition = targetCamera.transform.position;
-                var cameraHeight = 2f * targetCamera.orthographicSize;
-                var cameraWidth = cameraHeight * targetCamera.aspect;
-                var randomX = Random.Range(-cameraWidth - spawnAreaWidth, cameraWidth + spawnAreaWidth) + cameraPosition.x;
-                var randomY = Random.Range(-cameraHeight - spawnAreaWidth, cameraHeight + spawnAreaWidth) + cameraPosition.y;
-                return new Vector2(randomX, randomY);
-            }
-            return Vector2.zero;
         }
 
         public EnemyActor GetEnemyPrefab()

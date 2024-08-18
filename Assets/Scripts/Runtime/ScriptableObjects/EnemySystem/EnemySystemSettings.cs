@@ -11,7 +11,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.EnemySystem
         [Required]
         public List<EnemyActor> enemyPrefabs;
         [Min(0f)]
-        public float spawnAreaWidth = 0;
+        public int spawnAreaOffset = 0;
         [Min(0f)]
         public float enemySpawnRate = 1;
         [Min(1)]

@@ -43,5 +43,40 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
                 FollowPlayer(player);
             }
         }
+
+        public Vector2 GetOutsideCameraPosition(int offset)
+        {
+            if (!mainCamera)
+            {
+                return Vector2.zero;
+            }
+            var cameraBottomLeft = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, mainCamera.transform.position.z));
+            var cameraTopRight = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, mainCamera.transform.position.z));
+            var  minX = cameraBottomLeft.x;
+            var maxX = cameraTopRight.x;
+            var minY = cameraBottomLeft.y;
+            var maxY = cameraTopRight.y;
+            var side = Random.Range(0, 4);
+            Vector2 spawnPosition;
+            switch (side)
+            {
+                case 0: // Top
+                    spawnPosition = new Vector2(Random.Range(minX, maxX), maxY - offset);
+                    break;
+                case 1: // Bottom
+                    spawnPosition = new Vector2(Random.Range(minX, maxX), minY + offset);
+                    break;
+                case 2: // Left
+                    spawnPosition = new Vector2(minX + offset, Random.Range(minY, maxY));
+                    break;
+                case 3: // Right
+                    spawnPosition = new Vector2(maxX - offset, Random.Range(minY, maxY));
+                    break;
+                default:
+                    spawnPosition = Vector2.zero;
+                    break;
+            }
+            return spawnPosition;
+        }
     }
 }

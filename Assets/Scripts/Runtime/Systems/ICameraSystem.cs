@@ -7,5 +7,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
     {
         public void FollowPlayer(IPlayerActor player);
         public bool TryGetCamera(out Camera targetCamera);
+        public Vector2 GetOutsideCameraPosition(int offset);
+
     }
 }

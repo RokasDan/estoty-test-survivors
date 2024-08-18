@@ -18,6 +18,6 @@ MonoBehaviour:
   - {fileID: 4614117349056149921, guid: 2b662ba51794ef84fb16fa77f6cc6498, type: 3}
   - {fileID: 6803875312860477579, guid: debc4b10ac27ce24ab601bccd8aec70b, type: 3}
   - {fileID: 8562114563474476995, guid: 4116eb01fa7b84941966c586d3628999, type: 3}
-  spawnAreaWidth: 12
+  spawnAreaOffset: 5
   enemySpawnRate: 5
   initialEnemyCount: 5
