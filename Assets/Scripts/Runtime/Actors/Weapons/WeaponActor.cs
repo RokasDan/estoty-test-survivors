@@ -1,4 +1,5 @@
 ﻿using NaughtyAttributes;
+using RokasDan.EstotyTestSurvivors.Runtime.Actors.Projectiles;
 using UnityEngine;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Weapons
@@ -15,16 +16,17 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Weapons
 
         [Required]
         [SerializeField]
-        private GameObject projectile;
+        private ProjectileActor projectile;
 
-        public void Shoot(bool isInverted)
+        public void Shoot(int damage, float pushForce, bool isInverted)
         {
             var weaponAngle = Quaternion.Euler(0, 0, projectileExit.eulerAngles.z + -90);
             if (isInverted)
             {
                 weaponAngle = Quaternion.Euler(0, 0, projectileExit.eulerAngles.z + 90);
             }
-            Instantiate(projectile, projectileExit.position, weaponAngle);
+            var bullet = Instantiate(projectile, projectileExit.position, weaponAngle);
+            bullet.SetProjectileStats(damage, pushForce);
         }
     }
 }

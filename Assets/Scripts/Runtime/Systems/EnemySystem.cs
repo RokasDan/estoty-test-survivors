@@ -59,6 +59,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
             TrackEnemy(enemyActor);
             if (playerSystem.TryGetPlayer(out var player))
             {
+                enemyActor.AddEnemySystem(this);
                 enemyActor.SetPlayerLocation(player);
             }
         }

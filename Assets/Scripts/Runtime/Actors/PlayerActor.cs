@@ -37,6 +37,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
 
         [SerializeField]
         private Animator animator;
+
         private IPlayerInput playerInput;
         private IEnemyTracker enemyTracker;
         private IWeaponController weaponController;
@@ -45,6 +46,8 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
 
         private int playerMaxHealth = 10;
         private int currentHealth;
+        private int playerDamage = 1;
+        private float playerPushForce = 15;
 
         private bool isPlayerDead;
 
@@ -52,7 +55,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
         {
             playerInput = new SimplePlayerInput();
             enemyTracker = new EnemyTracker(enemyTrigger);
-            weaponController = new WeaponController(weapon, weaponRotation, fireSpeed);
+            weaponController = new WeaponController(weapon, weaponRotation, fireSpeed, playerDamage, playerPushForce);
             animationController = new PlayerAnimationController(animator);
             playerInverter = new PlayerRotation(transform);
             currentHealth = playerMaxHealth;
@@ -114,6 +117,11 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
             }
             animationController.ShowPlayerDeath();
             isPlayerDead = true;
+        }
+
+        public void PushPlayer(Vector2 force)
+        {
+            rigidBody.AddForce(force, ForceMode2D.Impulse);
         }
 
         public bool IsPlayerDead => isPlayerDead;

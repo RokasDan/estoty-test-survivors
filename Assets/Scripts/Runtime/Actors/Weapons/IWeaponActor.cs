@@ -2,6 +2,6 @@
 {
     internal interface IWeaponActor
     {
-        public void Shoot(bool isInverted);
+        public void Shoot(int damage, float pushForce, bool isInverted);
     }
 }

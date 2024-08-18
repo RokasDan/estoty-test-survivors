@@ -7,16 +7,18 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.Enemies
     {
         public string enemyName;
         [Min(1)]
-        public int maxHealth;
+        public int maxHealth = 1;
         [Min(1)]
-        public int attackDamage;
-        [Min(0)]
-        public float attackRange;
-        [Min(0)]
-        public float attackSpeed;
-        [Min(0)]
-        public float moveSpeed;
+        public int attackDamage = 1;
+        [Min(0.1f)]
+        public float attackRange = 0.1f;
+        [Min(0.1f)]
+        public float attackSpeed = 0.1f;
         [Min(1)]
-        public int spawnRarity;
+        public float pushForce = 1;
+        [Min(0.1f)]
+        public float moveSpeed = 0.1f;
+        [Min(1)]
+        public int spawnRarity = 1;
     }
 }

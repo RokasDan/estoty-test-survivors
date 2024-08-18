@@ -8,6 +8,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
     {
         public void DamagePlayer(int damage);
         public void KillPlayer();
+        public void PushPlayer(Vector2 force);
         public bool IsPlayerDead { get; }
         public Transform PlayerTransform { get; }
         public int MaxPlayerHealth { get; }

@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 1059502657487362797}
   projectileExit: {fileID: 366920673783846840}
-  projectile: {fileID: 3018849852439673259, guid: 6cdb4206f7b76824783eb995c0c4c3ee, type: 3}
+  projectile: {fileID: 6218228148913193624, guid: 6cdb4206f7b76824783eb995c0c4c3ee, type: 3}
 --- !u!1 &7245072971589301603
 GameObject:
   m_ObjectHideFlags: 0

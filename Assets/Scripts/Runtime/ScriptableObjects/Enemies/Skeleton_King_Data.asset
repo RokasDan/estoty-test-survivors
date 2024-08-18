@@ -17,5 +17,6 @@ MonoBehaviour:
   attackDamage: 10
   attackRange: 1.2
   attackSpeed: 2
+  pushForce: 20
   moveSpeed: 1
   spawnRarity: 8

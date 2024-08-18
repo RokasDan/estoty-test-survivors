@@ -2,6 +2,7 @@
 using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Triggers;
 using RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.Enemies;
+using RokasDan.EstotyTestSurvivors.Runtime.Systems;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -30,14 +31,17 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
         private ColliderTrigger attackTrigger;
 
         private IPlayerActor playerActor;
+        private EnemySystem enemySystem;
         private int currentHealth;
         private bool playerInRange;
         private float lastAttack;
+        private bool enemyIsAlive;
 
         private void Awake()
         {
             currentHealth = enemyData.maxHealth;
             attackTrigger.CircleCollider.radius = enemyData.attackRange;
+            enemyIsAlive = true;
         }
 
         private void OnEnable()
@@ -54,19 +58,19 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
 
         private void Update()
         {
-            if (playerActor is { IsPlayerDead: false })
+            if (playerActor is { IsPlayerDead: false } && enemyIsAlive)
             {
                 FlipEnemySprite();
-                AttackPlayer(playerActor);
             }
         }
 
         private void FixedUpdate()
         {
-            if (playerActor is { IsPlayerDead: false })
+            if (playerActor is { IsPlayerDead: false } && enemyIsAlive)
             {
                 var direction = (playerActor.PlayerTransform.position - transform.position).normalized;
                 Move(transform, direction, enemyData.moveSpeed);
+                AttackPlayer(playerActor);
             }
             else
             {
@@ -82,12 +86,8 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
 
         public void Decelerate(float speed)
         {
-            if (rigidBody.velocity.magnitude > 0.01f)
-            {
-                var deceleration = rigidBody.velocity.normalized * (speed * Time.fixedDeltaTime);
-                rigidBody.velocity = Vector2.MoveTowards(rigidBody.velocity, Vector2.zero, deceleration.magnitude);
-            }
-            else
+            rigidBody.velocity = Vector2.Lerp(rigidBody.velocity, Vector2.zero, 15 * Time.deltaTime);
+            if (rigidBody.velocity.magnitude < 0.1f)
             {
                 rigidBody.velocity = Vector2.zero;
             }
@@ -95,7 +95,23 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
 
         public void DamageEnemy(int damage)
         {
-            throw new System.NotImplementedException();
+            currentHealth -= damage;
+            if (currentHealth < 0)
+            {
+                KillEnemy();
+            }
+        }
+
+        public void KillEnemy()
+        {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(false);
+            }
+            enemySystem.UntrackEnemy(this);
+            enemyAnimation.SetBool("Dead", true);
+            enemyIsAlive = false;
+            Destroy(gameObject, 5f);
         }
 
         public void SetPlayerLocation(IPlayerActor player)
@@ -103,10 +119,22 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
             this.playerActor = player;
         }
 
+        public void AddEnemySystem(EnemySystem system)
+        {
+            enemySystem = system;
+        }
+
+        public void PushEnemy(Vector2 force)
+        {
+            rigidBody.AddForce(force, ForceMode2D.Impulse);
+        }
+
         public int GetRarityLevel()
         {
             return enemyData.spawnRarity;
         }
+
+        public Transform EnemyTransform => transform;
 
         public void AttackPlayer(IPlayerActor player)
         {
@@ -114,6 +142,8 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
             {
                 enemyAnimation.SetTrigger("Hit");
                 lastAttack = Time.time;
+                var pushDirection = (playerActor.PlayerTransform.position - transform.position).normalized;
+                player.PushPlayer(pushDirection * enemyData.pushForce);
                 player.DamagePlayer(enemyData.attackDamage);
             }
         }
