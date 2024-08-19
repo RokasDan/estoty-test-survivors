@@ -1,5 +1,6 @@
 ﻿using System;
 using NaughtyAttributes;
+using RokasDan.EstotyTestSurvivors.Runtime.Actors.Projectiles;
 using RokasDan.EstotyTestSurvivors.Runtime.Actors.Weapons;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Animation;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables;
@@ -46,6 +47,9 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
         [SerializeField]
         private Animator animator;
 
+        [SerializeField]
+        private ProjectileActor projectileActor;
+
         private IPlayerInput playerInput;
         private IEnemyTracker enemyTracker;
         private IWeaponController weaponController;
@@ -55,7 +59,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
         private int currentPlayerAmmo = 20;
         private int maxPlayerHealth = 10;
         private int currentPlayerHealth = 0;
-        private int maxPlayerExperience = 0;
+        private int maxPlayerExperience = 15;
         private int currentPlayerExperience = 0;
         private int currentPlayerLevel = 0;
         private int currentPlayerScore = 0;
@@ -240,8 +244,21 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
             set => moveSpeed = value;
         }
 
+        public float PlayerFireRate
+        {
+            get => fireSpeed;
+            set => fireSpeed = value;
+        }
+
+        public ProjectileActor Projectile
+        {
+            get => projectileActor;
+            set => projectileActor = value;
+        }
+
         public Action OnStatsChanged { get; set; }
         public Transform PlayerTransform => transform;
+
         public void Move(Vector2 direction, float speed)
         {
             var targetVelocity = direction.normalized * speed;

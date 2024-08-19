@@ -1,8 +1,6 @@
-﻿using System;
-using NaughtyAttributes;
+﻿using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Actors;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using VContainer;
 
@@ -12,6 +10,9 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
     {
         [Inject]
         private IPlayerSystem playerSystem;
+
+        [Inject]
+        private LevelSystem levelUpSystem;
 
         [Required]
         [SerializeField]
@@ -56,7 +57,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
             UpdateExperience(playerActor.CurrentPlayerExperience, playerActor.MaxPlayerExperience);
             UpdateKillCount(playerActor.CurrentScoreCount);
             UpdatedBulletCount(playerActor.CurrentPlayerAmmo);
-            UpdatedLevelCount(playerActor.CurrentPlayerLevel);
+            UpdatedLevelCount(levelUpSystem.CurrentPlayerLevel);
         }
 
         public void UpdateHealth(int currentHealth, int maxHealth)

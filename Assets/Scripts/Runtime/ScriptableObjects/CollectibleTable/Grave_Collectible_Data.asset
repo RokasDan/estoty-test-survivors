@@ -21,3 +21,7 @@ MonoBehaviour:
     dropChance: 0.529
     minQuantity: 5
     maxQuantity: 5
+  - collectiblePrefab: {fileID: 6250281750892572956, guid: 3cc2711abb912ef4695d7d2ea5ea9b77, type: 3}
+    dropChance: 0.199
+    minQuantity: 1
+    maxQuantity: 1

@@ -17,6 +17,10 @@ namespace RokasDan.EstotyTestSurvivors.Runtime
 
         [Required]
         [SerializeField]
+        private LevelSystem levelSystem;
+
+        [Required]
+        [SerializeField]
         private CameraSystem cameraSystem;
 
         [Required]
@@ -40,6 +44,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime
             builder.RegisterComponent(collectibleSystem).AsImplementedInterfaces();
             builder.RegisterInstance(enemySystemSettings).AsSelf();
             builder.Register<EnemySystem>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.RegisterComponent(levelSystem).AsImplementedInterfaces();
         }
     }
 }

@@ -54,10 +54,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
 
         private void Awake()
         {
-            if (!enemySystem.AliveEnemies.Contains(this))
-            {
-                enemySystem.TrackEnemy(this);
-            }
             if (playerSystem.TryGetPlayer(out var player))
             {
                 playerActor = player;
@@ -66,6 +62,14 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
             lootDropRadius = enemyData.lootDropRadius;
             attackTrigger.CircleCollider.radius = enemyData.attackRange;
             enemyIsAlive = true;
+        }
+
+        private void Start()
+        {
+            if (!enemySystem.AliveEnemies.Contains(this))
+            {
+                enemySystem.TrackEnemy(this);
+            }
         }
 
         private void OnEnable()

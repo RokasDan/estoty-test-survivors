@@ -90,6 +90,18 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
             return enemyPrefabs.FirstOrDefault();
         }
 
+        public int MaxEnemyCount
+        {
+            get => maxEnemyCount;
+            set => maxEnemyCount = value;
+        }
+
+        public float EnemySpawnRate
+        {
+            get => enemySpawnRate;
+            set => enemySpawnRate = value;
+        }
+
         public List<IEnemyActor> AliveEnemies => aliveEnemies;
     }
 }

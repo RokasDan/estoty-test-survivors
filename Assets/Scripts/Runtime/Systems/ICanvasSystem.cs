@@ -6,5 +6,6 @@
         public void UpdateExperience(int currentExperience, int maxExperience);
         public void UpdateKillCount(int count);
         public void UpdatedBulletCount(int bullets);
+        public void UpdatedLevelCount(int level);
     }
 }

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a05aa094714a42880dc9ae1e946735, type: 3}
+  m_Name: LevelSystemSettings
+  m_EditorClassIdentifier: 
+  addMaxLevelCeiling: 2
+  additionalEnemies: 2
+  spawnRateModifier: 0.85
+  playerUpgrades:
+  - {fileID: 11400000, guid: 9752100be9e9ce043b1da66f4975aad1, type: 2}
+  - {fileID: 11400000, guid: 726f38ca6698b4e4696e45d738e81485, type: 2}
+  - {fileID: 11400000, guid: c08532bd2c525ab4c8faec3671e83872, type: 2}
+  - {fileID: 11400000, guid: b756365edf6fcaf4fa8f57b02df215d5, type: 2}

@@ -1,4 +1,5 @@
 ﻿using System;
+using RokasDan.EstotyTestSurvivors.Runtime.Actors.Projectiles;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Locomotion;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Triggers;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
         public void CollectItem(ColliderEnteredArgs args);
         public bool IsPlayerDead { get; }
         public Transform PlayerTransform { get; }
+        public ProjectileActor Projectile { get; set; }
         public int CurrentPlayerAmmo { get; set; }
         public int MaxPlayerHealth { get; set; }
         public int CurrentPlayerHealth { get; set; }
@@ -26,5 +28,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
         public int CurrentScoreCount { get; set; }
         public Action OnStatsChanged { get; set; }
         public float PlayerSpeed { get; set; }
+        public float PlayerFireRate { get; set; }
     }
 }

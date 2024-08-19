@@ -10,6 +10,8 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
         public EnemyActor GetEnemyPrefab();
         public void TrackEnemy(IEnemyActor enemyActor);
         public void UntrackEnemy(IEnemyActor enemyActor);
+        public int MaxEnemyCount { get; set; }
+        public float EnemySpawnRate { get; set; }
         public List<IEnemyActor> AliveEnemies { get; }
     }
 }

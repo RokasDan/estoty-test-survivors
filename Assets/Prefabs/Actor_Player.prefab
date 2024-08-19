@@ -530,8 +530,9 @@ MonoBehaviour:
   collectableTrigger: {fileID: 265918684990201257}
   weaponRotation: {fileID: 8891325664579815492}
   weapon: {fileID: 6795876234640676230}
-  fireSpeed: 2
+  fireSpeed: 0.17
   animator: {fileID: 3553675480035923588}
+  projectileActor: {fileID: 0}
 --- !u!95 &3553675480035923588
 Animator:
   serializedVersion: 5

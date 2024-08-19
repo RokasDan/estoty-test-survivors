@@ -11,6 +11,9 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
         [Inject]
         private CollectibleSystem system;
 
+        [Inject]
+        private LevelSystem levelUpsystem;
+
         [Min(1)]
         [SerializeField]
         private int experienceCount = 1;
@@ -28,6 +31,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
                 player.CurrentPlayerExperience += experienceCount;
                 if (player.CurrentPlayerExperience > player.MaxPlayerExperience)
                 {
+                    levelUpsystem.PlayerLevelUp();
                     player.CurrentPlayerExperience = 0;
                 }
                 player.OnStatsChanged?.Invoke();
