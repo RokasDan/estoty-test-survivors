@@ -2,7 +2,7 @@
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Data.Enemies
 {
-    [CreateAssetMenu(fileName = "EnemyData", menuName = "ScriptableObjects/EnemyData", order = 1)]
+    [CreateAssetMenu(fileName = "New EnemyData", menuName = "Enemies/EnemyData", order = 1)]
     internal sealed class EnemyData : ScriptableObject
     {
         public string enemyName;

@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Data.PlayerUpgrades
 {
-    [CreateAssetMenu(fileName = "MaxHealthUpgrade", menuName = "LevelUpScriptableObjects/MaxHealthUpgrade")]
-    internal sealed class MaxHealthUpgrade : ScriptableObject, IPlayerUpgrade
+    [CreateAssetMenu(fileName = "New Upgrade_FireRate", menuName = "LevelUp/Upgrade_FireRate")]
+    internal sealed class UpgradeFireRate : ScriptableObject, IPlayerUpgrade
     {
         [Range(0f, 1f)]
-        public float upgradeChange = 1;
+        public float upgradeChance = 1;
 
-        [Min(1)]
-        public int additionalPoints;
+        [Range(0f, 1f)]
+        public float fireRateModifier = 1;
 
         [Required]
         public UpgradeHeaderActor upgradeText;
@@ -21,9 +21,9 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Data.PlayerUpgrades
         {
             var positionAbove = new Vector2(player.PlayerTransform.position.x, player.PlayerTransform.position.y + 1);
             Instantiate(upgradeText, positionAbove, Quaternion.identity);
-            player.MaxPlayerHealth += additionalPoints;
+            player.PlayerFireRate *= fireRateModifier;
         }
 
-        public float UpgradeChance => upgradeChange;
+        public float UpgradeChance => upgradeChance;
     }
 }

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1cc91981d081405a9d834bd009f7e36f, type: 3}
-  m_Name: Skeleton_Kind_Collectible_Data
+  m_Name: Collectible_Table_Skeleton_Kind_Collectible
   m_EditorClassIdentifier: 
   collectibles:
   - collectiblePrefab: {fileID: 910969115733995407, guid: 84ac51d455da077429710d1680e487bc, type: 3}

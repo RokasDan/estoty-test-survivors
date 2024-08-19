@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Data.PlayerUpgrades
 {
-    [CreateAssetMenu(fileName = "FireRateUpgrade", menuName = "LevelUpScriptableObjects/FireRateUpgrade")]
-    internal sealed class FireRateUpgrade : ScriptableObject, IPlayerUpgrade
+    [CreateAssetMenu(fileName = "New Upgrade_MoveSpeed", menuName = "LevelUp/Upgrade_MoveSpeed")]
+    internal sealed class UpgradeMoveSpeed : ScriptableObject, IPlayerUpgrade
     {
         [Range(0f, 1f)]
         public float upgradeChance = 1;
 
-        [Range(0f, 1f)]
-        public float fireRateModifier = 1;
+        [Range(1f, 2f)]
+        public float speedModifier = 1;
 
         [Required]
         public UpgradeHeaderActor upgradeText;
@@ -21,7 +21,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Data.PlayerUpgrades
         {
             var positionAbove = new Vector2(player.PlayerTransform.position.x, player.PlayerTransform.position.y + 1);
             Instantiate(upgradeText, positionAbove, Quaternion.identity);
-            player.PlayerFireRate *= fireRateModifier;
+            player.PlayerSpeed *= speedModifier;
         }
 
         public float UpgradeChance => upgradeChance;

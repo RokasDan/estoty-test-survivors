@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b856e7a37168463f9e47e03f6628af5f, type: 3}
-  m_Name: Skeleton_Data
+  m_Name: Enemy_Advanced_Zombie_Data
   m_EditorClassIdentifier: 
-  enemyName: Skeleton
-  maxHealth: 5
-  attackDamage: 3
+  enemyName: Advanced Zombie
+  maxHealth: 2
+  attackDamage: 2
   attackRange: 0.8
-  attackSpeed: 3
-  pushForce: 15
-  moveSpeed: 2.5
-  spawnRarity: 6
+  attackSpeed: 2
+  pushForce: 10
+  moveSpeed: 2
+  spawnRarity: 4
   lootDropRadius: 1
   maxDistanceFromPlayer: 30

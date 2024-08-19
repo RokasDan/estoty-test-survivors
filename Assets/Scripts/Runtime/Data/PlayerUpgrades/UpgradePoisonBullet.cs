@@ -6,8 +6,8 @@ using UnityEngine;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Data.PlayerUpgrades
 {
-    [CreateAssetMenu(fileName = "PoisonBulletUpgrade", menuName = "LevelUpScriptableObjects/PoisonBulletUpgrade")]
-    internal sealed class PoisonBulletUpgrade : ScriptableObject, IPlayerUpgrade
+    [CreateAssetMenu(fileName = "New Upgrade_PoisonBullet", menuName = "LevelUp/Upgrade_PoisonBullet")]
+    internal sealed class UpgradePoisonBullet : ScriptableObject, IPlayerUpgrade
     {
         [Range(0f, 1f)]
         public float upgradeChance = 1;

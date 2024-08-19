@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Data.EnemySystem
 {
-    [CreateAssetMenu(fileName = "EnemySystemSettings", menuName = "ScriptableObjects/EnemySystemSettings", order = 1)]
+    [CreateAssetMenu(fileName = "New EnemySystemSettings", menuName = "EnemySettings/EnemySystemSettings", order = 1)]
     internal sealed class EnemySystemSettings : ScriptableObject
     {
         [Required]

@@ -2,9 +2,9 @@
 using RokasDan.EstotyTestSurvivors.Runtime.Data.PlayerUpgrades;
 using UnityEngine;
 
-namespace RokasDan.EstotyTestSurvivors.Runtime.Data.LevelSystemSettings
+namespace RokasDan.EstotyTestSurvivors.Runtime.Data.LevelSystem
 {
-    [CreateAssetMenu(fileName = "LevelSystemSettings", menuName = "LevelUpScriptableObjects/LevelSystemSettings")]
+    [CreateAssetMenu(fileName = "New LevelSystemSettings", menuName = "LevelUpSettings/LevelSystemSettings")]
     internal sealed class LevelSystemSettings : ScriptableObject
     {
         [Min(0)]

@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb144e1b5e834afb8b2d8eeabd0b1e3e, type: 3}
-  m_Name: MaxHealthUpgrade
+  m_Script: {fileID: 11500000, guid: 4d5fe58903a848f98219e74960cfd41d, type: 3}
+  m_Name: Upgrade_MoveSpeed
   m_EditorClassIdentifier: 
-  upgradeChange: 0.8
-  additionalPoints: 10
-  upgradeText: {fileID: 619375198662415068, guid: aa9b94415868cb54bbc0095f98f6510a, type: 3}
+  upgradeChance: 0.875
+  speedModifier: 1.2
+  upgradeText: {fileID: 1374120948073821908, guid: 4fa65e691b87bfe438e4a6d665e8c477, type: 3}

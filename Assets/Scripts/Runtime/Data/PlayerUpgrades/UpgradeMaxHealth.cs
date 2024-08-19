@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Data.PlayerUpgrades
 {
-    [CreateAssetMenu(fileName = "MoveSpeedUpgrade", menuName = "LevelUpScriptableObjects/MoveSpeedUpgrade")]
-    internal sealed class MoveSpeedUpgrade : ScriptableObject, IPlayerUpgrade
+    [CreateAssetMenu(fileName = "New Upgrade_MaxHealth", menuName = "LevelUp/Upgrade_MaxHealth")]
+    internal sealed class UpgradeMaxHealth : ScriptableObject, IPlayerUpgrade
     {
         [Range(0f, 1f)]
-        public float upgradeChance = 1;
+        public float upgradeChange = 1;
 
-        [Range(1f, 2f)]
-        public float speedModifier = 1;
+        [Min(1)]
+        public int additionalPoints;
 
         [Required]
         public UpgradeHeaderActor upgradeText;
@@ -21,9 +21,9 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Data.PlayerUpgrades
         {
             var positionAbove = new Vector2(player.PlayerTransform.position.x, player.PlayerTransform.position.y + 1);
             Instantiate(upgradeText, positionAbove, Quaternion.identity);
-            player.PlayerSpeed *= speedModifier;
+            player.MaxPlayerHealth += additionalPoints;
         }
 
-        public float UpgradeChance => upgradeChance;
+        public float UpgradeChance => upgradeChange;
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Data.CollectibleTable
 {
-    [CreateAssetMenu(fileName = "CollectibleTableData", menuName = "ScriptableObjects/CollectibleTableData")]
+    [CreateAssetMenu(fileName = "New CollectibleTableData", menuName = "Collectibles/CollectibleTable")]
     internal sealed class CollectibleTableData : ScriptableObject
     {
         public List<CollectibleDrop> collectibles;

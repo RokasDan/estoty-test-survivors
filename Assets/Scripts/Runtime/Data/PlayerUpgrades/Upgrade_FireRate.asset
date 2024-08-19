@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a3a452ed8854967ac76b08dba2ebc7d, type: 3}
-  m_Name: FireRateUpgrade
+  m_Name: Upgrade_FireRate
   m_EditorClassIdentifier: 
   upgradeChance: 0.875
   fireRateModifier: 0.85

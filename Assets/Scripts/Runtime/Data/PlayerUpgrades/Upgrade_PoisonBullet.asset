@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f08c841a655a4eb6b92c63c154275909, type: 3}
-  m_Name: PoisonBulletUpgrade
+  m_Name: Upgrade_PoisonBullet
   m_EditorClassIdentifier: 
   upgradeChance: 0.3
   damageTimeModifier: 1.2

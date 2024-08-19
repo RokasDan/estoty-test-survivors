@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1cc91981d081405a9d834bd009f7e36f, type: 3}
-  m_Name: Grave_Collectible_Data
+  m_Name: Collectible_Table_Skeleton_Collectible
   m_EditorClassIdentifier: 
   collectibles:
   - collectiblePrefab: {fileID: 8384593376701562610, guid: af0caa91c5fc9e14ca8c117e4f64bd74, type: 3}
-    dropChance: 0.561
-    minQuantity: 5
+    dropChance: 0.401
+    minQuantity: 1
+    maxQuantity: 5
+  - collectiblePrefab: {fileID: 910969115733995407, guid: 84ac51d455da077429710d1680e487bc, type: 3}
+    dropChance: 0.809
+    minQuantity: 3
     maxQuantity: 5
   - collectiblePrefab: {fileID: 6652407020408288854, guid: ca36d0c228ff8af49b572836482de376, type: 3}
-    dropChance: 0.529
-    minQuantity: 5
-    maxQuantity: 5
-  - collectiblePrefab: {fileID: 6250281750892572956, guid: 3cc2711abb912ef4695d7d2ea5ea9b77, type: 3}
-    dropChance: 0.199
+    dropChance: 0.605
     minQuantity: 1
-    maxQuantity: 1
+    maxQuantity: 2
