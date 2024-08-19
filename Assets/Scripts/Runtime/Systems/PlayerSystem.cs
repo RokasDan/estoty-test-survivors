@@ -1,6 +1,8 @@
 ﻿using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Actors;
+using RokasDan.EstotyTestSurvivors.Runtime.Actors.Players;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 
@@ -11,33 +13,34 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
         [Inject]
         private IObjectResolver objectResolver;
 
+        [FormerlySerializedAs("playerActorPrefab")]
         [Required]
         [SerializeField]
-        private PlayerActor playerActorPrefab;
+        private ActorPlayer actorPlayerPrefab;
 
-        private PlayerActor playerInstance;
+        private ActorPlayer actorPlayerInstance;
 
         public void Start()
         {
             if (!TryGetPlayer(out var player))
             {
-                playerInstance = objectResolver.Instantiate(
-                    playerActorPrefab,
+                actorPlayerInstance = objectResolver.Instantiate(
+                    actorPlayerPrefab,
                     Vector3.zero,
                     Quaternion.identity
                 );
             }
         }
 
-        public bool TryGetPlayer(out IPlayerActor player)
+        public bool TryGetPlayer(out IActorPlayer actorPlayer)
         {
-            if (playerInstance == false)
+            if (actorPlayerInstance == false)
             {
-                player = default;
+                actorPlayer = default;
                 return false;
             }
 
-            player = playerInstance;
+            actorPlayer = actorPlayerInstance;
             return true;
         }
     }

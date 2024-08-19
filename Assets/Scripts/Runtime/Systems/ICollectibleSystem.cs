@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables;
-using RokasDan.EstotyTestSurvivors.Runtime.Data.CollectibleTable;
+using RokasDan.EstotyTestSurvivors.Runtime.Data.LootTables;
 using UnityEngine;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Systems

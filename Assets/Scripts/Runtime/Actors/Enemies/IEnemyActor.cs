@@ -1,5 +1,5 @@
-﻿using RokasDan.EstotyTestSurvivors.Runtime.Components.Locomotion;
-using RokasDan.EstotyTestSurvivors.Runtime.Components.PlayerRotation;
+﻿using RokasDan.EstotyTestSurvivors.Runtime.Actors.Players;
+using RokasDan.EstotyTestSurvivors.Runtime.Components.Locomotion;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Triggers;
 using RokasDan.EstotyTestSurvivors.Runtime.Systems;
 using UnityEngine;
@@ -13,7 +13,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
         public void KillEnemy();
         public void FlipEnemySprite();
         public void AddEnemySystem(EnemySystem system);
-        public void AttackPlayer(IPlayerActor playerActor);
+        public void AttackPlayer(IActorPlayer actorPlayer);
         public void DetectPlayer(ColliderEnteredArgs args);
         public void LosePlayer(ColliderExitedArgs args);
         public void PushEnemy(Vector2 force);

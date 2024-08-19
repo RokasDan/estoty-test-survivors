@@ -2,9 +2,10 @@
 using System.Collections;
 using DG.Tweening;
 using NaughtyAttributes;
+using RokasDan.EstotyTestSurvivors.Runtime.Actors.Players;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Triggers;
-using RokasDan.EstotyTestSurvivors.Runtime.Data.CollectibleTable;
 using RokasDan.EstotyTestSurvivors.Runtime.Data.Enemies;
+using RokasDan.EstotyTestSurvivors.Runtime.Data.LootTables;
 using RokasDan.EstotyTestSurvivors.Runtime.Systems;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -47,7 +48,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
         [SerializeField]
         private CollectibleTableData collectibleTable;
 
-        private IPlayerActor playerActor;
+        private IActorPlayer actorPlayer;
         private float maxDistanceFromPlayer;
         private int currentHealth;
         private float lootDropRadius;
@@ -59,7 +60,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
         {
             if (playerSystem.TryGetPlayer(out var player))
             {
-                playerActor = player;
+                actorPlayer = player;
             }
             currentHealth = enemyData.maxHealth;
             lootDropRadius = enemyData.lootDropRadius;
@@ -90,7 +91,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
 
         private void Update()
         {
-            if (playerActor is { IsPlayerDead: false } && enemyIsAlive)
+            if (actorPlayer is { IsPlayerDead: false } && enemyIsAlive)
             {
                 FlipEnemySprite();
             }
@@ -98,11 +99,11 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
 
         private void FixedUpdate()
         {
-            if (playerActor is { IsPlayerDead: false } && enemyIsAlive)
+            if (actorPlayer is { IsPlayerDead: false } && enemyIsAlive)
             {
-                var direction = (playerActor.PlayerTransform.position - transform.position).normalized;
+                var direction = (actorPlayer.PlayerTransform.position - transform.position).normalized;
                 Move(direction, enemyData.moveSpeed);
-                AttackPlayer(playerActor);
+                AttackPlayer(actorPlayer);
             }
             else
             {
@@ -191,8 +192,8 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
                 child.gameObject.SetActive(false);
             }
 
-            playerActor.CurrentScoreCount += 1;
-            playerActor.OnStatsChanged?.Invoke();
+            actorPlayer.CurrentScoreCount += 1;
+            actorPlayer.OnStatsChanged?.Invoke();
             enemySystem.UntrackEnemy(this);
             collectibleSystem.SpawnCollectables(collectibleTable, transform.position, lootDropRadius);
             enemyAnimation.SetBool("Dead", true);
@@ -218,32 +219,32 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
         public Transform EnemyTransform => transform;
         public void EnemySelfDestruct()
         {
-            if (playerActor == null)
+            if (actorPlayer == null)
             {
                 return;
             }
-            if (Vector2.Distance(playerActor.PlayerTransform.position, transform.position) > maxDistanceFromPlayer)
+            if (Vector2.Distance(actorPlayer.PlayerTransform.position, transform.position) > maxDistanceFromPlayer)
             {
                 enemySystem.UntrackEnemy(this);
                 Destroy(gameObject);
             }
         }
 
-        public void AttackPlayer(IPlayerActor player)
+        public void AttackPlayer(IActorPlayer actorPlayer)
         {
             if (playerInRange && Time.time >= lastAttack + enemyData.attackSpeed)
             {
                 enemyAnimation.SetTrigger("Hit");
                 lastAttack = Time.time;
-                var pushDirection = (playerActor.PlayerTransform.position - transform.position).normalized;
-                player.PushPlayer(pushDirection * enemyData.pushForce);
-                player.DamagePlayer(enemyData.attackDamage);
+                var pushDirection = (this.actorPlayer.PlayerTransform.position - transform.position).normalized;
+                actorPlayer.PushPlayer(pushDirection * enemyData.pushForce);
+                actorPlayer.DamagePlayer(enemyData.attackDamage);
             }
         }
 
         public void DetectPlayer(ColliderEnteredArgs args)
         {
-            var player = args.Collider.GetComponentInParent<IPlayerActor>();
+            var player = args.Collider.GetComponentInParent<IActorPlayer>();
             if (player == null)
             {
                 return;
@@ -253,7 +254,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
 
         public void LosePlayer(ColliderExitedArgs args)
         {
-            var player = args.Collider.GetComponentInParent<IPlayerActor>();
+            var player = args.Collider.GetComponentInParent<IActorPlayer>();
             if (player == null)
             {
                 return;
@@ -263,9 +264,9 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
 
         public void FlipEnemySprite()
         {
-            if (playerActor != null)
+            if (actorPlayer != null)
             {
-                bool playerOnRight = playerActor.PlayerTransform.position.x > transform.position.x;
+                bool playerOnRight = actorPlayer.PlayerTransform.position.x > transform.position.x;
                 enemySprite.flipX = !playerOnRight;
             }
         }

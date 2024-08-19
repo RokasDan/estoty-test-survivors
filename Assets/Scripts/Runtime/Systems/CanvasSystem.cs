@@ -1,5 +1,6 @@
 ﻿using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Actors;
+using RokasDan.EstotyTestSurvivors.Runtime.Actors.Players;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
@@ -34,29 +35,29 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
         [SerializeField]
         private Text levelText;
 
-        private IPlayerActor playerActor;
+        private IActorPlayer actorPlayer;
 
         private void Start()
         {
             if (playerSystem.TryGetPlayer(out var player))
             {
-                playerActor = player;
+                actorPlayer = player;
                 UpdatePlayerStats();
-                playerActor.OnStatsChanged += UpdatePlayerStats;
+                actorPlayer.OnStatsChanged += UpdatePlayerStats;
             }
         }
 
         private void OnDestroy()
         {
-            playerActor.OnStatsChanged -= UpdatePlayerStats;
+            actorPlayer.OnStatsChanged -= UpdatePlayerStats;
         }
 
         private void UpdatePlayerStats()
         {
-            UpdateHealth(playerActor.CurrentPlayerHealth, playerActor.MaxPlayerHealth);
-            UpdateExperience(playerActor.CurrentPlayerExperience, playerActor.MaxPlayerExperience);
-            UpdateKillCount(playerActor.CurrentScoreCount);
-            UpdatedBulletCount(playerActor.CurrentPlayerAmmo);
+            UpdateHealth(actorPlayer.CurrentPlayerHealth, actorPlayer.MaxPlayerHealth);
+            UpdateExperience(actorPlayer.CurrentPlayerExperience, actorPlayer.MaxPlayerExperience);
+            UpdateKillCount(actorPlayer.CurrentScoreCount);
+            UpdatedBulletCount(actorPlayer.CurrentPlayerAmmo);
             UpdatedLevelCount(levelUpSystem.CurrentPlayerLevel);
         }
 

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using RokasDan.EstotyTestSurvivors.Runtime.Data.PlayerUpgrades;
+using RokasDan.EstotyTestSurvivors.Runtime.Data.Upgrades;
 using UnityEngine;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Data.LevelSystem

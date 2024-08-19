@@ -1,6 +1,6 @@
 ﻿using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Data.LevelSystem;
-using RokasDan.EstotyTestSurvivors.Runtime.Data.PlayerUpgrades;
+using RokasDan.EstotyTestSurvivors.Runtime.Data.Upgrades;
 using UnityEngine;
 using VContainer;
 
