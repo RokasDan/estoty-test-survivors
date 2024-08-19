@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies;
-using UnityEngine;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
 {

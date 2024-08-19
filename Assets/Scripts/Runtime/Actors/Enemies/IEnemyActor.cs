@@ -13,7 +13,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
         public void KillEnemy();
         public void FlipEnemySprite();
         public void AddEnemySystem(EnemySystem system);
-        public void AttackPlayer(IActorPlayer actorPlayer);
+        public void AttackPlayer(IActorPlayer player);
         public void DetectPlayer(ColliderEnteredArgs args);
         public void LosePlayer(ColliderExitedArgs args);
         public void PushEnemy(Vector2 force);

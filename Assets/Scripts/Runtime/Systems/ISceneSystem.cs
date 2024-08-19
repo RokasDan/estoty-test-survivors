@@ -1,4 +1,4 @@
-﻿namespace RokasDan.EstotyTestSurvivors.Runtime.Systems.SceneSystem
+﻿namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
 {
     internal interface ISceneSystem
     {

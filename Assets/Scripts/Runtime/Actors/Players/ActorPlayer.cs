@@ -10,7 +10,7 @@ using RokasDan.EstotyTestSurvivors.Runtime.Components.Input;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Rotation;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Tracking;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Triggers;
-using RokasDan.EstotyTestSurvivors.Runtime.Systems.SceneSystem;
+using RokasDan.EstotyTestSurvivors.Runtime.Systems;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -145,7 +145,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Players
             collectableTrigger.OnTriggerExited -= UntrackCollectables;
         }
 
-        public void HandleWeaponFire(Transform enemyTransform, bool isPlayerInverted)
+        private void HandleWeaponFire(Transform enemyTransform, bool isPlayerInverted)
         {
             if (enemyTransform)
             {

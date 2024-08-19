@@ -1,5 +1,4 @@
 ﻿using NaughtyAttributes;
-using RokasDan.EstotyTestSurvivors.Runtime.Actors;
 using RokasDan.EstotyTestSurvivors.Runtime.Actors.Players;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -22,7 +21,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
 
         public void Start()
         {
-            if (!TryGetPlayer(out var player))
+            if (!TryGetPlayer(out _))
             {
                 actorPlayerInstance = objectResolver.Instantiate(
                     actorPlayerPrefab,

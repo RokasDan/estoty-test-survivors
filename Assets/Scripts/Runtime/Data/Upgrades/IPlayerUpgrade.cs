@@ -1,5 +1,4 @@
-﻿using RokasDan.EstotyTestSurvivors.Runtime.Actors;
-using RokasDan.EstotyTestSurvivors.Runtime.Actors.Players;
+﻿using RokasDan.EstotyTestSurvivors.Runtime.Actors.Players;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Data.Upgrades
 {

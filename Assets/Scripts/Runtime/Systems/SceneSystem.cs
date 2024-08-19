@@ -3,9 +3,10 @@ using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace RokasDan.EstotyTestSurvivors.Runtime.Systems.SceneSystem
+namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
 {
     internal sealed class SceneSystem : MonoBehaviour, ISceneSystem
+
     {
         [Required]
         [SerializeField]

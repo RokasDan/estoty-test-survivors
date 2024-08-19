@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using DG.Tweening;
 using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Actors.Players;
@@ -8,7 +7,6 @@ using RokasDan.EstotyTestSurvivors.Runtime.Data.Enemies;
 using RokasDan.EstotyTestSurvivors.Runtime.Data.LootTables;
 using RokasDan.EstotyTestSurvivors.Runtime.Systems;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using VContainer;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
@@ -230,15 +228,15 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
             }
         }
 
-        public void AttackPlayer(IActorPlayer actorPlayer)
+        public void AttackPlayer(IActorPlayer player)
         {
             if (playerInRange && Time.time >= lastAttack + enemyData.attackSpeed)
             {
                 enemyAnimation.SetTrigger("Hit");
                 lastAttack = Time.time;
                 var pushDirection = (this.actorPlayer.PlayerTransform.position - transform.position).normalized;
-                actorPlayer.PushPlayer(pushDirection * enemyData.pushForce);
-                actorPlayer.DamagePlayer(enemyData.attackDamage);
+                player.PushPlayer(pushDirection * enemyData.pushForce);
+                player.DamagePlayer(enemyData.attackDamage);
             }
         }
 

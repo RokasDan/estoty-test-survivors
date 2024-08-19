@@ -1,6 +1,4 @@
-﻿using System;
-using NaughtyAttributes;
-using RokasDan.EstotyTestSurvivors.Runtime.Actors;
+﻿using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Actors.Players;
 using RokasDan.EstotyTestSurvivors.Runtime.Systems;
 using UnityEngine;
@@ -36,17 +34,17 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
             timer = collectableLifeTime;
         }
 
-        public void Collect(IActorPlayer actorPlayer)
+        public void Collect(IActorPlayer player)
         {
-            if (actorPlayer != null)
+            if (player != null)
             {
-                actorPlayer.CurrentPlayerExperience += experienceCount;
-                if (actorPlayer.CurrentPlayerExperience > actorPlayer.MaxPlayerExperience)
+                player.CurrentPlayerExperience += experienceCount;
+                if (player.CurrentPlayerExperience > player.MaxPlayerExperience)
                 {
                     levelUpsystem.PlayerLevelUp();
-                    actorPlayer.CurrentPlayerExperience = 0;
+                    player.CurrentPlayerExperience = 0;
                 }
-                actorPlayer.OnStatsChanged?.Invoke();
+                player.OnStatsChanged?.Invoke();
             }
             DestroyCollectable();
         }
@@ -66,9 +64,9 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
             CollectableSelfDestruct();
         }
 
-        public void FallowPlayer(IActorPlayer actorPlayer)
+        public void FallowPlayer(IActorPlayer player)
         {
-            this.actorPlayer = actorPlayer;
+            this.actorPlayer = player;
         }
 
         public void Move(Vector2 direction, float speed)

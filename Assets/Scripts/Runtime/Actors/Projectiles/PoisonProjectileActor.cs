@@ -1,7 +1,6 @@
 ﻿using RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Triggers;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Projectiles
 {

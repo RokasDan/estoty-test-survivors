@@ -14,7 +14,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
         [Inject]
         private IObjectResolver objectResolver;
         private readonly EnemySystemSettings enemySystemSettings;
-        private readonly IPlayerSystem playerSystem;
         private readonly ICameraSystem cameraSystem;
         private int spawnAreaOffset;
         private float enemySpawnRate;
@@ -22,10 +21,9 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
         private int maxEnemyCount;
         private readonly List<IEnemyActor> aliveEnemies = new List<IEnemyActor>();
 
-        public EnemySystem(IPlayerSystem playerSystem, EnemySystemSettings enemySystemSettings, ICameraSystem cameraSystem)
+        public EnemySystem(EnemySystemSettings enemySystemSettings, ICameraSystem cameraSystem)
         {
             this.enemySystemSettings = enemySystemSettings;
-            this.playerSystem = playerSystem;
             this.cameraSystem = cameraSystem;
         }
 

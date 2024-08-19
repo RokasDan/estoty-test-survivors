@@ -1,5 +1,4 @@
-﻿using RokasDan.EstotyTestSurvivors.Runtime.Actors;
-using RokasDan.EstotyTestSurvivors.Runtime.Actors.Players;
+﻿using RokasDan.EstotyTestSurvivors.Runtime.Actors.Players;
 using UnityEngine;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Systems

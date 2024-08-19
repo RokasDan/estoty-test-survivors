@@ -1,9 +1,5 @@
-﻿using NaughtyAttributes;
-using RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies;
+﻿using RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Triggers;
-using RokasDan.EstotyTestSurvivors.Runtime.Systems;
-using UnityEngine;
-using VContainer;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Projectiles
 {

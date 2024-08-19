@@ -1,6 +1,4 @@
-﻿using System;
-using NaughtyAttributes;
-using RokasDan.EstotyTestSurvivors.Runtime.Actors;
+﻿using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Actors.Players;
 using RokasDan.EstotyTestSurvivors.Runtime.Systems;
 using UnityEngine;
@@ -47,19 +45,19 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
             CollectableSelfDestruct();
         }
 
-        public void Collect(IActorPlayer actorPlayer)
+        public void Collect(IActorPlayer player)
         {
-            if (actorPlayer != null)
+            if (player != null)
             {
-                actorPlayer.CurrentPlayerAmmo += ammoCount;
-                actorPlayer.OnStatsChanged?.Invoke();
+                player.CurrentPlayerAmmo += ammoCount;
+                player.OnStatsChanged?.Invoke();
             }
             DestroyCollectable();
         }
 
-        public void FallowPlayer(IActorPlayer actorPlayer)
+        public void FallowPlayer(IActorPlayer player)
         {
-            this.actorPlayer = actorPlayer;
+            this.actorPlayer = player;
         }
 
         public void DestroyCollectable()

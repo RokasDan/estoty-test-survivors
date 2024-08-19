@@ -1,9 +1,7 @@
 ﻿using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Data.EnemySystem;
 using RokasDan.EstotyTestSurvivors.Runtime.Systems;
-using RokasDan.EstotyTestSurvivors.Runtime.Systems.SceneSystem;
 using UnityEngine;
-using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 

@@ -1,10 +1,7 @@
-﻿using System;
-using NaughtyAttributes;
-using RokasDan.EstotyTestSurvivors.Runtime.Actors;
+﻿using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Actors.Players;
 using RokasDan.EstotyTestSurvivors.Runtime.Systems;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using VContainer;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
@@ -34,7 +31,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
             timer = collectableLifeTime;
         }
 
-        public void Collect(IActorPlayer actorPlayer)
+        public void Collect(IActorPlayer player)
         {
             if (this.actorPlayer != null)
             {
@@ -72,9 +69,9 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
             }
         }
 
-        public void FallowPlayer(IActorPlayer actorPlayer)
+        public void FallowPlayer(IActorPlayer player)
         {
-            this.actorPlayer = actorPlayer;
+            this.actorPlayer = player;
         }
 
         public void Move(Vector2 direction, float speed)

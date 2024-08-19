@@ -1,5 +1,4 @@
-﻿using RokasDan.EstotyTestSurvivors.Runtime.Actors;
-using RokasDan.EstotyTestSurvivors.Runtime.Actors.Players;
+﻿using RokasDan.EstotyTestSurvivors.Runtime.Actors.Players;
 using UnityEngine;
 using VContainer;
 
@@ -11,7 +10,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
         private Camera mainCamera;
 
         [SerializeField]
-        private float dampening = 0;
+        private float dampening = 1;
 
         [Inject]
         private IPlayerSystem playerSystem;
