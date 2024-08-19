@@ -20,5 +20,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
         public void PushEnemy(Vector2 force);
         public int GetRarityLevel();
         public Transform EnemyTransform { get; }
+        public void EnemySelfDestruct();
     }
 }

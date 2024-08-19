@@ -48,6 +48,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
         private CollectibleTableData collectibleTable;
 
         private IPlayerActor playerActor;
+        private float maxDistanceFromPlayer;
         private int currentHealth;
         private float lootDropRadius;
         private bool playerInRange;
@@ -62,6 +63,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
             }
             currentHealth = enemyData.maxHealth;
             lootDropRadius = enemyData.lootDropRadius;
+            maxDistanceFromPlayer = enemyData.maxDistanceFromPlayer;
             attackTrigger.CircleCollider.radius = enemyData.attackRange;
             enemyIsAlive = true;
         }
@@ -106,6 +108,8 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
             {
                 Decelerate();
             }
+
+            EnemySelfDestruct();
         }
 
         public void Move(Vector2 direction, float speed)
@@ -212,6 +216,18 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
         }
 
         public Transform EnemyTransform => transform;
+        public void EnemySelfDestruct()
+        {
+            if (playerActor == null)
+            {
+                return;
+            }
+            if (Vector2.Distance(playerActor.PlayerTransform.position, transform.position) > maxDistanceFromPlayer)
+            {
+                enemySystem.UntrackEnemy(this);
+                Destroy(gameObject);
+            }
+        }
 
         public void AttackPlayer(IPlayerActor player)
         {

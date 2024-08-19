@@ -1,4 +1,5 @@
-﻿using NaughtyAttributes;
+﻿using System;
+using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Actors;
 using RokasDan.EstotyTestSurvivors.Runtime.Systems;
 using UnityEngine;
@@ -16,6 +17,10 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
 
         [Min(1)]
         [SerializeField]
+        private float collectableLifeTime = 20;
+
+        [Min(1)]
+        [SerializeField]
         private int experienceCount = 1;
 
         [Required]
@@ -23,6 +28,12 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
         private Rigidbody2D rigidBody;
 
         private IPlayerActor playerActor;
+        private float timer;
+
+        private void Awake()
+        {
+            timer = collectableLifeTime;
+        }
 
         public void Collect(IPlayerActor player)
         {
@@ -50,6 +61,8 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
                 var direction = (playerActor.PlayerTransform.position - transform.position).normalized;
                 Move(direction, playerActor.PlayerSpeed);
             }
+
+            CollectableSelfDestruct();
         }
 
         public void FallowPlayer(IPlayerActor player)
@@ -79,6 +92,15 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
                 system.UntrackCollectables(this);
             }
             Destroy(gameObject);
+        }
+
+        public void CollectableSelfDestruct()
+        {
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+            {
+                DestroyCollectable();
+            }
         }
     }
 }

@@ -9,5 +9,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
         public void Collect(IPlayerActor player);
         public void FallowPlayer(IPlayerActor player);
         public void DestroyCollectable();
+        public void CollectableSelfDestruct();
     }
 }

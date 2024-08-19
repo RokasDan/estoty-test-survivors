@@ -6,5 +6,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Projectiles
     {
         public void MoveProjectile();
         public void DamageEnemy(ColliderEnteredArgs args);
+        public void ProjectileSelfDestruct();
     }
 }

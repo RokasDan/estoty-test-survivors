@@ -129,6 +129,7 @@ MonoBehaviour:
   projectileSpeed: 8
   projectileDamage: 1
   pushForce: 15
+  projectileLifeTime: 10
   enemyTrigger: {fileID: 634366397509696694}
 --- !u!1 &7122783763637605158
 GameObject:

@@ -161,5 +161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c6065a4b66b403a85a3c563469f6889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collectableLifeTime: 20
   healthCount: 4
   rigidBody: {fileID: 6772584413538870311}

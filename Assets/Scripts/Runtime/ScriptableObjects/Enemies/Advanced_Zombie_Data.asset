@@ -21,3 +21,4 @@ MonoBehaviour:
   moveSpeed: 2
   spawnRarity: 4
   lootDropRadius: 1
+  maxDistanceFromPlayer: 30

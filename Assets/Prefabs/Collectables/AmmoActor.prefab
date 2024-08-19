@@ -162,4 +162,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoCount: 50
+  collectibleLifetime: 20
   rigidBody: {fileID: 1268317437528561588}

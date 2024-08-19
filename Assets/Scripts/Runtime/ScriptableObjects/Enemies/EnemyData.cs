@@ -22,5 +22,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.Enemies
         public int spawnRarity = 1;
         [Min(0)]
         public float lootDropRadius = 0;
+        [Min(1)]
+        public float maxDistanceFromPlayer = 1;
     }
 }

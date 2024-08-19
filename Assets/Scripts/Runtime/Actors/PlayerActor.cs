@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using NaughtyAttributes;
@@ -10,6 +11,7 @@ using RokasDan.EstotyTestSurvivors.Runtime.Components.Input;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.PlayerRotation;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Triggers;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.WeaponControl;
+using RokasDan.EstotyTestSurvivors.Runtime.Systems.SceneSystem;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -21,6 +23,9 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
     {
         [Inject]
         private IObjectResolver objectResolver;
+
+        [Inject]
+        private ISceneSystem sceneSystem;
 
         [Required]
         [SerializeField]
@@ -206,6 +211,12 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
             }
         }
 
+        private IEnumerator WaitAndLoadScene()
+        {
+            yield return new WaitForSeconds(4f);
+            sceneSystem.LoadScene(2);
+        }
+
         public void KillPlayer()
         {
             foreach (Transform child in transform)
@@ -214,6 +225,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
             }
             animationController.ShowPlayerDeath();
             isPlayerDead = true;
+            StartCoroutine(WaitAndLoadScene());
         }
 
         public void PushPlayer(Vector2 force)

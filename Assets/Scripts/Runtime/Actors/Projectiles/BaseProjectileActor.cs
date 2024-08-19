@@ -1,6 +1,8 @@
-﻿using NaughtyAttributes;
+﻿using System;
+using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Triggers;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Projectiles
 {
@@ -18,9 +20,20 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Projectiles
         [SerializeField]
         protected float pushForce = 1;
 
+        [Min(1)]
+        [SerializeField]
+        protected float projectileLifeTime = 10;
+
         [Required]
         [SerializeField]
         protected ColliderTrigger enemyTrigger;
+
+        private float timer;
+
+        private void Awake()
+        {
+            timer = projectileLifeTime;
+        }
 
         protected virtual void OnEnable()
         {
@@ -38,10 +51,19 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Projectiles
         }
 
         public abstract void DamageEnemy(ColliderEnteredArgs args);
+        public void ProjectileSelfDestruct()
+        {
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
 
         protected virtual void Update()
         {
             MoveProjectile();
+            ProjectileSelfDestruct();
         }
     }
 }

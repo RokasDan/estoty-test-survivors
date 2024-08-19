@@ -1,6 +1,7 @@
 ﻿using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.EnemySystem;
 using RokasDan.EstotyTestSurvivors.Runtime.Systems;
+using RokasDan.EstotyTestSurvivors.Runtime.Systems.SceneSystem;
 using UnityEngine;
 using UnityEngine.Serialization;
 using VContainer;
@@ -14,6 +15,10 @@ namespace RokasDan.EstotyTestSurvivors.Runtime
         [Required]
         [SerializeField]
         private PlayerSystem playerSystem;
+
+        [Required]
+        [SerializeField]
+        private SceneSystem sceneSystem;
 
         [Required]
         [SerializeField]
@@ -38,6 +43,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime
 
         protected override void Configure(IContainerBuilder builder)
         {
+            builder.RegisterComponent(sceneSystem).AsImplementedInterfaces();
             builder.RegisterComponent(playerSystem).AsImplementedInterfaces();
             builder.RegisterComponent(cameraSystem).AsImplementedInterfaces();
             builder.RegisterComponent(canvasSystem).AsImplementedInterfaces();

@@ -1,4 +1,5 @@
-﻿using NaughtyAttributes;
+﻿using System;
+using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Actors;
 using RokasDan.EstotyTestSurvivors.Runtime.Systems;
 using UnityEngine;
@@ -15,12 +16,21 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
         [SerializeField]
         private int ammoCount = 1;
 
+        [Min(1)]
+        [SerializeField]
+        public float collectibleLifetime = 20f;
+
         [Required]
         [SerializeField]
         private Rigidbody2D rigidBody;
 
         private IPlayerActor playerActor;
+        private float timer;
 
+        private void Awake()
+        {
+            timer = collectibleLifetime;
+        }
         private void FixedUpdate()
         {
             if (playerActor == null)
@@ -32,6 +42,8 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
                 var direction = (playerActor.PlayerTransform.position - transform.position).normalized;
                 Move(direction, playerActor.PlayerSpeed);
             }
+
+            CollectableSelfDestruct();
         }
 
         public void Collect(IPlayerActor player)
@@ -56,6 +68,15 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
                 system.UntrackCollectables(this);
             }
             Destroy(gameObject);
+        }
+
+        public void CollectableSelfDestruct()
+        {
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
 
         public void Move(Vector2 direction, float speed)
