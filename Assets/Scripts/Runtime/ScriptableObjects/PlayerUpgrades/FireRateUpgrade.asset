@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: FireRateUpgrade
   m_EditorClassIdentifier: 
   upgradeChance: 0.875
-  fireRateModifier: 0.008
+  fireRateModifier: 0.85
+  upgradeText: {fileID: 4348665632949777447, guid: 9fb448364a28f9d4ca3ce6924f446013, type: 3}

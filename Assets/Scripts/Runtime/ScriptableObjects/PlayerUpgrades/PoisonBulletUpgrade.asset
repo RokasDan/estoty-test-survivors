@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: PoisonBulletUpgrade
   m_EditorClassIdentifier: 
   upgradeChance: 0.3
-  projectile: {fileID: 6218228148913193624, guid: 6cdb4206f7b76824783eb995c0c4c3ee, type: 3}
+  damageTimeModifier: 1.2
+  poisonProjectileActor: {fileID: 4225944899521759521, guid: c2308793d8f34f1418df1246346e0b9d, type: 3}
+  upgradeText: {fileID: 2784578707054157665, guid: b45f4a479b5780c429783058b19a0522, type: 3}

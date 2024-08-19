@@ -1,4 +1,6 @@
-﻿using RokasDan.EstotyTestSurvivors.Runtime.Actors;
+﻿using NaughtyAttributes;
+using RokasDan.EstotyTestSurvivors.Runtime.Actors;
+using RokasDan.EstotyTestSurvivors.Runtime.Components.UpgradeHeader;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -13,9 +15,13 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.PlayerUpgrades
         [Min(1)]
         public int additionalPoints;
 
+        [Required]
+        public UpgradeHeaderActor upgradeText;
+
         public void Apply(IPlayerActor player)
         {
-            Debug.Log("MaxHealth");
+            var positionAbove = new Vector2(player.PlayerTransform.position.x, player.PlayerTransform.position.y + 1);
+            Instantiate(upgradeText, positionAbove, Quaternion.identity);
             player.MaxPlayerHealth += additionalPoints;
         }
 

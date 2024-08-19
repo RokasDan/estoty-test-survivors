@@ -10,6 +10,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
     internal interface IEnemyActor: IMovement
     {
         public void DamageEnemy(int damage);
+        public void DamageOverTime(int impactDamage, int tickDamage, float tickInterval, float duration);
         public void KillEnemy();
         public void FlipEnemySprite();
         public void AddEnemySystem(EnemySystem system);

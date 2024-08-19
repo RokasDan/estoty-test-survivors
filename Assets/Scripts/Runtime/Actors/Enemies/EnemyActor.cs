@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using DG.Tweening;
 using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Triggers;
 using RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.CollectibleSystem;
@@ -123,11 +125,59 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
 
         public void DamageEnemy(int damage)
         {
+            enemySprite.DOColor(Color.red, 0.2f).OnComplete(() =>
+            {
+                enemySprite.DORewind();
+            });
             currentHealth -= damage;
             if (currentHealth < 0)
             {
                 KillEnemy();
             }
+        }
+
+        private IEnumerator TimeDamage(int impactDamage ,int damagePerTick, float tickInterval, float duration)
+        {
+            var firstHit = true;
+            var elapsedTime = 0f;
+            while (elapsedTime < duration && currentHealth > 0)
+            {
+                if (firstHit)
+                {
+                    enemySprite.DOColor(Color.red, 0.2f).OnComplete(() =>
+                    {
+                        enemySprite.DORewind();
+                    });
+                    currentHealth -= impactDamage;
+                    if (currentHealth <= 0)
+                    {
+                        KillEnemy();
+                        yield break;
+                    }
+                    firstHit = false;
+                }
+                else
+                {
+                    enemySprite.DOColor(Color.green, 0.2f).OnComplete(() =>
+                    {
+                        enemySprite.DORewind();
+                    });
+                    currentHealth -= damagePerTick;
+                    if (currentHealth <= 0)
+                    {
+                        KillEnemy();
+                        yield break;
+                    }
+                }
+
+                yield return new WaitForSeconds(tickInterval);
+                elapsedTime += tickInterval;
+            }
+        }
+
+        public void DamageOverTime(int impactDamage, int tickDamage, float tickInterval, float duration)
+        {
+            StartCoroutine(TimeDamage(impactDamage, tickDamage, tickInterval, duration));
         }
 
         public void KillEnemy()

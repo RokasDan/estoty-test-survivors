@@ -21,10 +21,15 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.EnemyTracker
         public Transform GetClosestEnemy()
         {
             Transform closestEnemy = null;
-            float closestDistanceSqr = Mathf.Infinity;
+            var closestDistanceSqr = Mathf.Infinity;
             foreach (Transform enemy in enemies)
             {
-                float distanceSqr = (enemy.position - enemyTrigger.transform.position).sqrMagnitude;
+                if (!enemy)
+                {
+                    continue;
+                }
+
+                var distanceSqr = (enemy.position - enemyTrigger.transform.position).sqrMagnitude;
                 if (distanceSqr < closestDistanceSqr)
                 {
                     closestDistanceSqr = distanceSqr;

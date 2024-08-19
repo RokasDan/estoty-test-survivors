@@ -1,7 +1,9 @@
 ﻿using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Actors;
 using RokasDan.EstotyTestSurvivors.Runtime.Actors.Projectiles;
+using RokasDan.EstotyTestSurvivors.Runtime.Components.UpgradeHeader;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.PlayerUpgrades
 {
@@ -11,15 +13,29 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.PlayerUpgrades
         [Range(0f, 1f)]
         public float upgradeChance = 1;
 
+        [Range(1f, 2f)]
+        public float damageTimeModifier = 1;
+
         [Required]
-        public ProjectileActor projectile;
+        public PoisonProjectileActor poisonProjectileActor;
+
+        [Required]
+        public UpgradeHeaderActor upgradeText;
 
         public void Apply(IPlayerActor player)
         {
-            if (projectile)
+            if (poisonProjectileActor)
             {
-                Debug.Log("PoisonBullet");
-                player.Projectile = projectile;
+                var positionAbove = new Vector2(player.PlayerTransform.position.x, player.PlayerTransform.position.y + 1);
+                Instantiate(upgradeText, positionAbove, Quaternion.identity);
+                if (player.ProjectileActor is PoisonProjectileActor poisonProjectile)
+                {
+                    poisonProjectile.damageDuration *= damageTimeModifier;
+                }
+                else
+                {
+                    player.ProjectileActor = poisonProjectileActor;
+                }
             }
         }
 

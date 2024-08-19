@@ -16,7 +16,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
         public void CollectItem(ColliderEnteredArgs args);
         public bool IsPlayerDead { get; }
         public Transform PlayerTransform { get; }
-        public ProjectileActor Projectile { get; set; }
+        public BaseProjectileActor ProjectileActor { get; set; }
         public int CurrentPlayerAmmo { get; set; }
         public int MaxPlayerHealth { get; set; }
         public int CurrentPlayerHealth { get; set; }

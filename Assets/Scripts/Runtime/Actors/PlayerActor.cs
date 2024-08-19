@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using DG.Tweening;
 using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Actors.Projectiles;
-using RokasDan.EstotyTestSurvivors.Runtime.Actors.Weapons;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Animation;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.EnemyTracker;
@@ -10,12 +11,17 @@ using RokasDan.EstotyTestSurvivors.Runtime.Components.PlayerRotation;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Triggers;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.WeaponControl;
 using UnityEngine;
+using VContainer;
+using VContainer.Unity;
 
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
 {
     internal sealed class PlayerActor : MonoBehaviour, IPlayerActor
     {
+        [Inject]
+        private IObjectResolver objectResolver;
+
         [Required]
         [SerializeField]
         private Rigidbody2D rigidBody;
@@ -35,20 +41,24 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
         [SerializeField]
         private ColliderTrigger collectableTrigger;
 
+        [Required]
+        [SerializeField]
+        private Transform projectileExit;
+
+        [Required]
         [SerializeField]
         private Transform weaponRotation;
 
         [SerializeField]
-        private WeaponActor weapon;
-
-        [SerializeField]
         private float fireSpeed = 2;
 
+        [Required]
         [SerializeField]
         private Animator animator;
 
+        [Required]
         [SerializeField]
-        private ProjectileActor projectileActor;
+        private BaseProjectileActor projectileActor;
 
         private IPlayerInput playerInput;
         private IEnemyTracker enemyTracker;
@@ -64,6 +74,8 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
         private int currentPlayerLevel = 0;
         private int currentPlayerScore = 0;
         private float itemPickupSpeed = 2;
+        private float lastShotTime;
+        private List<SpriteRenderer> playerSprites = new List<SpriteRenderer>();
 
         private int playerDamage = 1;
         private float playerPushForce = 15;
@@ -74,10 +86,15 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
         {
             playerInput = new SimplePlayerInput();
             enemyTracker = new EnemyTracker(enemyTrigger);
-            weaponController = new WeaponController(weapon, weaponRotation, fireSpeed, playerDamage, playerPushForce);
             animationController = new PlayerAnimationController(animator);
             playerInverter = new PlayerRotation(transform);
             currentPlayerHealth = maxPlayerHealth;
+
+            var allSprites = GetComponentsInChildren<SpriteRenderer>();
+            if (allSprites.Length != 0)
+            {
+                playerSprites.AddRange(allSprites);
+            }
         }
 
         private void Update()
@@ -89,7 +106,11 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
                 playerInverter.InvertPlayer(playerDirection, enemyTracker.GetClosestEnemy());
                 if (CurrentPlayerAmmo > 0)
                 {
-                    weaponController.HandleWeaponFire(enemyTracker.GetClosestEnemy(), playerInverter.IsPlayerInverted);
+                    HandleWeaponFire(enemyTracker.GetClosestEnemy(), playerInverter.IsPlayerInverted);
+                }
+                else
+                {
+                    ResetWeaponPosition();
                 }
             }
         }
@@ -122,6 +143,43 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
             collectableTrigger.OnTriggerExited -= UntrackCollectables;
         }
 
+        public void HandleWeaponFire(Transform enemyTransform, bool isPlayerInverted)
+        {
+            if (enemyTransform)
+            {
+                RotateGunArm(enemyTransform, isPlayerInverted);
+
+                if (Time.time >= lastShotTime + fireSpeed)
+                {
+                    FireAtEnemy(isPlayerInverted);
+                    lastShotTime = Time.time;
+                }
+            }
+        }
+
+        private void RotateGunArm(Transform enemyTransform, bool isInverted)
+        {
+            var direction = enemyTransform.position - weaponRotation.position;
+            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            if (isInverted)
+            {
+                angle += 180;
+            }
+            weaponRotation.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        }
+
+        private void FireAtEnemy(bool isInverted)
+        {
+            var weaponAngle = Quaternion.Euler(0, 0, projectileExit.eulerAngles.z + -90);
+            if (isInverted)
+            {
+                weaponAngle = Quaternion.Euler(0, 0, projectileExit.eulerAngles.z + 90);
+            }
+            objectResolver.Instantiate(projectileActor, projectileExit.position, weaponAngle);
+            currentPlayerAmmo -= 1;
+            OnStatsChanged?.Invoke();
+        }
+
         private void ResetWeaponPosition()
         {
             weaponRotation.transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -129,6 +187,17 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
 
         public void DamagePlayer(int damage)
         {
+            if (playerSprites.Count > 0)
+            {
+                foreach (var sprite in playerSprites)
+                {
+                    sprite.DOColor(Color.red, 0.2f).OnComplete(() =>
+                    {
+                        sprite.DORewind();
+                    });
+                }
+            }
+
             currentPlayerHealth -= damage;
             OnStatsChanged?.Invoke();
             if (currentPlayerHealth < 0)
@@ -250,7 +319,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors
             set => fireSpeed = value;
         }
 
-        public ProjectileActor Projectile
+        public BaseProjectileActor ProjectileActor
         {
             get => projectileActor;
             set => projectileActor = value;

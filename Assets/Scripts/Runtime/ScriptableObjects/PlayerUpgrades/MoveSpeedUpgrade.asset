@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradeChance: 0.875
   speedModifier: 1.2
+  upgradeText: {fileID: 1374120948073821908, guid: 4fa65e691b87bfe438e4a6d665e8c477, type: 3}

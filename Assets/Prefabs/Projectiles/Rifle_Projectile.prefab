@@ -126,7 +126,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32b4e52c0386444f843fe49392e2ec40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 7
+  projectileSpeed: 8
+  projectileDamage: 1
+  pushForce: 15
   enemyTrigger: {fileID: 634366397509696694}
 --- !u!1 &7122783763637605158
 GameObject:

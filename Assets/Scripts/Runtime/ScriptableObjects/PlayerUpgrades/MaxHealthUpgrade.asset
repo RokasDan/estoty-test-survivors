@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradeChange: 0.8
   additionalPoints: 10
+  upgradeText: {fileID: 619375198662415068, guid: aa9b94415868cb54bbc0095f98f6510a, type: 3}

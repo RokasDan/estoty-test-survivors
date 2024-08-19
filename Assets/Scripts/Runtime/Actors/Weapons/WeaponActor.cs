@@ -1,6 +1,7 @@
 ﻿using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Actors.Projectiles;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 
@@ -19,9 +20,10 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Weapons
         [SerializeField]
         private Transform projectileExit;
 
+        [FormerlySerializedAs("projectile")]
         [Required]
         [SerializeField]
-        private ProjectileActor projectile;
+        private RifleProjectileActor rifleProjectile;
 
         public void Shoot(int damage, float pushForce, bool isInverted)
         {
@@ -30,7 +32,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Weapons
             {
                 weaponAngle = Quaternion.Euler(0, 0, projectileExit.eulerAngles.z + 90);
             }
-            objectResolver.Instantiate(projectile, projectileExit.position, weaponAngle);
+            objectResolver.Instantiate(rifleProjectile, projectileExit.position, weaponAngle);
         }
     }
 }
