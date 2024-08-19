@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using NaughtyAttributes;
-using RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables;
 using UnityEngine;
 
-namespace RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.CollectibleSystem
+namespace RokasDan.EstotyTestSurvivors.Runtime.Data.CollectibleTable
 {
     [CreateAssetMenu(fileName = "CollectibleTableData", menuName = "ScriptableObjects/CollectibleTableData")]
     internal sealed class CollectibleTableData : ScriptableObject

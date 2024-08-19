@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.PlayerUpgrades;
+using RokasDan.EstotyTestSurvivors.Runtime.Data.PlayerUpgrades;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.LevelSystemSettings
+namespace RokasDan.EstotyTestSurvivors.Runtime.Data.LevelSystemSettings
 {
     [CreateAssetMenu(fileName = "LevelSystemSettings", menuName = "LevelUpScriptableObjects/LevelSystemSettings")]
     internal sealed class LevelSystemSettings : ScriptableObject

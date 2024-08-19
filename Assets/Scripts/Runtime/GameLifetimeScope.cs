@@ -1,5 +1,5 @@
 ﻿using NaughtyAttributes;
-using RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.EnemySystem;
+using RokasDan.EstotyTestSurvivors.Runtime.Data.EnemySystem;
 using RokasDan.EstotyTestSurvivors.Runtime.Systems;
 using RokasDan.EstotyTestSurvivors.Runtime.Systems.SceneSystem;
 using UnityEngine;

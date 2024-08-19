@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies;
-using RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.EnemySystem;
+using RokasDan.EstotyTestSurvivors.Runtime.Data.EnemySystem;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;

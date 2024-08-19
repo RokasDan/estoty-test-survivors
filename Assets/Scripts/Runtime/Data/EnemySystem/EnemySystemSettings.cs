@@ -3,7 +3,7 @@ using NaughtyAttributes;
 using RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies;
 using UnityEngine;
 
-namespace RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.EnemySystem
+namespace RokasDan.EstotyTestSurvivors.Runtime.Data.EnemySystem
 {
     [CreateAssetMenu(fileName = "EnemySystemSettings", menuName = "ScriptableObjects/EnemySystemSettings", order = 1)]
     internal sealed class EnemySystemSettings : ScriptableObject

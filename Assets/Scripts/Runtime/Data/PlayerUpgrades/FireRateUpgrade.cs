@@ -3,7 +3,7 @@ using RokasDan.EstotyTestSurvivors.Runtime.Actors;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.UpgradeHeader;
 using UnityEngine;
 
-namespace RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.PlayerUpgrades
+namespace RokasDan.EstotyTestSurvivors.Runtime.Data.PlayerUpgrades
 {
     [CreateAssetMenu(fileName = "FireRateUpgrade", menuName = "LevelUpScriptableObjects/FireRateUpgrade")]
     internal sealed class FireRateUpgrade : ScriptableObject, IPlayerUpgrade

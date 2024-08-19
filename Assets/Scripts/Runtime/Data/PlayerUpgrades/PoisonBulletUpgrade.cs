@@ -3,9 +3,8 @@ using RokasDan.EstotyTestSurvivors.Runtime.Actors;
 using RokasDan.EstotyTestSurvivors.Runtime.Actors.Projectiles;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.UpgradeHeader;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.PlayerUpgrades
+namespace RokasDan.EstotyTestSurvivors.Runtime.Data.PlayerUpgrades
 {
     [CreateAssetMenu(fileName = "PoisonBulletUpgrade", menuName = "LevelUpScriptableObjects/PoisonBulletUpgrade")]
     internal sealed class PoisonBulletUpgrade : ScriptableObject, IPlayerUpgrade

@@ -2,9 +2,8 @@
 using RokasDan.EstotyTestSurvivors.Runtime.Actors;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.UpgradeHeader;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.PlayerUpgrades
+namespace RokasDan.EstotyTestSurvivors.Runtime.Data.PlayerUpgrades
 {
     [CreateAssetMenu(fileName = "MaxHealthUpgrade", menuName = "LevelUpScriptableObjects/MaxHealthUpgrade")]
     internal sealed class MaxHealthUpgrade : ScriptableObject, IPlayerUpgrade

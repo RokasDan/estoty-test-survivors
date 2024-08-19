@@ -1,7 +1,6 @@
 ﻿using RokasDan.EstotyTestSurvivors.Runtime.Components.Locomotion;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.PlayerRotation;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Triggers;
-using RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.Enemies;
 using RokasDan.EstotyTestSurvivors.Runtime.Systems;
 using UnityEngine;
 

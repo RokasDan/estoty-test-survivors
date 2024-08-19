@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.Enemies
+namespace RokasDan.EstotyTestSurvivors.Runtime.Data.Enemies
 {
     [CreateAssetMenu(fileName = "EnemyData", menuName = "ScriptableObjects/EnemyData", order = 1)]
     internal sealed class EnemyData : ScriptableObject

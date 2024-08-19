@@ -1,7 +1,6 @@
 ﻿using RokasDan.EstotyTestSurvivors.Runtime.Actors;
-using UnityEngine;
 
-namespace RokasDan.EstotyTestSurvivors.Runtime.ScriptableObjects.PlayerUpgrades
+namespace RokasDan.EstotyTestSurvivors.Runtime.Data.PlayerUpgrades
 {
     internal interface IPlayerUpgrade
     {
