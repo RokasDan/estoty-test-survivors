@@ -33,6 +33,12 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Projectiles
             timer = projectileLifeTime;
         }
 
+        private void Update()
+        {
+            MoveProjectile();
+            ProjectileSelfDestruct();
+        }
+
         protected virtual void OnEnable()
         {
             enemyTrigger.OnTriggerEntered += DamageEnemy;
@@ -56,12 +62,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Projectiles
             {
                 Destroy(gameObject);
             }
-        }
-
-        protected virtual void Update()
-        {
-            MoveProjectile();
-            ProjectileSelfDestruct();
         }
     }
 }

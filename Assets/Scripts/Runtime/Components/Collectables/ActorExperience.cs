@@ -8,12 +8,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
 {
     internal sealed class ActorExperience: MonoBehaviour, ICollectable
     {
-        [Inject]
-        private CollectibleSystem system;
-
-        [Inject]
-        private LevelSystem levelUpsystem;
-
         [Min(1)]
         [SerializeField]
         private float collectableLifeTime = 20;
@@ -26,27 +20,18 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
         [SerializeField]
         private Rigidbody2D rigidBody;
 
+        [Inject]
+        private ICollectibleSystem system;
+
+        [Inject]
+        private ILevelSystem levelUpSystem;
+
         private IActorPlayer actorPlayer;
         private float timer;
 
         private void Awake()
         {
             timer = collectableLifeTime;
-        }
-
-        public void Collect(IActorPlayer player)
-        {
-            if (player != null)
-            {
-                player.CurrentPlayerExperience += experienceCount;
-                if (player.CurrentPlayerExperience > player.MaxPlayerExperience)
-                {
-                    levelUpsystem.PlayerLevelUp();
-                    player.CurrentPlayerExperience = 0;
-                }
-                player.OnStatsChanged?.Invoke();
-            }
-            DestroyCollectable();
         }
 
         private void FixedUpdate()
@@ -62,6 +47,21 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
             }
 
             CollectableSelfDestruct();
+        }
+
+        public void Collect(IActorPlayer player)
+        {
+            if (player != null)
+            {
+                player.CurrentPlayerExperience += experienceCount;
+                if (player.CurrentPlayerExperience > player.MaxPlayerExperience)
+                {
+                    levelUpSystem.PlayerLevelUp();
+                    player.CurrentPlayerExperience = 0;
+                }
+                player.OnStatsChanged?.Invoke();
+            }
+            DestroyCollectable();
         }
 
         public void FallowPlayer(IActorPlayer player)
@@ -86,14 +86,14 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
 
         public void DestroyCollectable()
         {
-            if (system && system.ActiveCollectibles.Contains(this))
+            if (system != null && system.ActiveCollectibles.Contains(this))
             {
                 system.UntrackCollectables(this);
             }
             Destroy(gameObject);
         }
 
-        public void CollectableSelfDestruct()
+        private void CollectableSelfDestruct()
         {
             timer -= Time.deltaTime;
             if (timer <= 0)

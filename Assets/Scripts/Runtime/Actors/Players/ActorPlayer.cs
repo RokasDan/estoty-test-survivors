@@ -19,12 +19,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Players
 {
     internal sealed class ActorPlayer : MonoBehaviour, IActorPlayer
     {
-        [Inject]
-        private IObjectResolver objectResolver;
-
-        [Inject]
-        private ISceneSystem sceneSystem;
-
         [Required]
         [SerializeField]
         private Rigidbody2D rigidBody;
@@ -63,6 +57,12 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Players
         [SerializeField]
         private BaseProjectileActor projectileActor;
 
+        [Inject]
+        private IObjectResolver objectResolver;
+
+        [Inject]
+        private ISceneSystem sceneSystem;
+
         private IPlayerInput playerInput;
         private IEnemyTracker enemyTracker;
         private IPlayerAnimationController animationController;
@@ -71,194 +71,21 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Players
         private int currentPlayerAmmo = 20;
         private int maxPlayerHealth = 10;
         private int currentPlayerHealth = 0;
+
         private int maxPlayerExperience = 15;
         private int currentPlayerExperience = 0;
+
         private int currentPlayerLevel = 0;
         private int currentPlayerScore = 0;
-        private float itemPickupSpeed = 2;
-        private float lastShotTime;
-        private List<SpriteRenderer> playerSprites = new List<SpriteRenderer>();
 
+        private float itemPickupSpeed = 2;
         private int playerDamage = 1;
         private float playerPushForce = 15;
 
+        private List<SpriteRenderer> playerSprites = new List<SpriteRenderer>();
+
+        private float lastShotTime;
         private bool isPlayerDead;
-
-        private void Awake()
-        {
-            playerInput = new SimplePlayerInput();
-            enemyTracker = new EnemyTracker(enemyTrigger);
-            animationController = new PlayerAnimationController(animator);
-            playerInverter = new PlayerRotation(transform);
-            currentPlayerHealth = maxPlayerHealth;
-
-            var allSprites = GetComponentsInChildren<SpriteRenderer>();
-            if (allSprites.Length != 0)
-            {
-                playerSprites.AddRange(allSprites);
-            }
-        }
-
-        private void Update()
-        {
-            if (!IsPlayerDead)
-            {
-                var playerDirection = playerInput.GetPlayerDirection();
-                animationController.UpdateAnimation(playerDirection, enemyTracker.GetClosestEnemy(), transform.position);
-                playerInverter.InvertPlayer(playerDirection, enemyTracker.GetClosestEnemy());
-                if (CurrentPlayerAmmo > 0)
-                {
-                    HandleWeaponFire(enemyTracker.GetClosestEnemy(), playerInverter.IsPlayerInverted);
-                }
-                else
-                {
-                    ResetWeaponPosition();
-                }
-            }
-        }
-
-        private void FixedUpdate()
-        {
-            if (!IsPlayerDead)
-            {
-                var playerDirection = playerInput.GetPlayerDirection();
-                Move(playerDirection, moveSpeed);
-            }
-            else
-            {
-                Decelerate();
-            }
-        }
-
-        private void OnEnable()
-        {
-            enemyTracker.OnNoEnemiesLeft += ResetWeaponPosition;
-            playerBodyTrigger.OnTriggerEntered += CollectItem;
-            collectableTrigger.OnTriggerEntered += TrackCollectables;
-            collectableTrigger.OnTriggerExited += UntrackCollectables;
-        }
-        private void OnDestroy()
-        {
-            enemyTracker.OnNoEnemiesLeft -= ResetWeaponPosition;
-            playerBodyTrigger.OnTriggerEntered -= CollectItem;
-            collectableTrigger.OnTriggerEntered -= TrackCollectables;
-            collectableTrigger.OnTriggerExited -= UntrackCollectables;
-        }
-
-        private void HandleWeaponFire(Transform enemyTransform, bool isPlayerInverted)
-        {
-            if (enemyTransform)
-            {
-                RotateGunArm(enemyTransform, isPlayerInverted);
-
-                if (Time.time >= lastShotTime + fireSpeed)
-                {
-                    FireAtEnemy(isPlayerInverted);
-                    lastShotTime = Time.time;
-                }
-            }
-        }
-
-        private void RotateGunArm(Transform enemyTransform, bool isInverted)
-        {
-            var direction = enemyTransform.position - weaponRotation.position;
-            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            if (isInverted)
-            {
-                angle += 180;
-            }
-            weaponRotation.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-        }
-
-        private void FireAtEnemy(bool isInverted)
-        {
-            var weaponAngle = Quaternion.Euler(0, 0, projectileExit.eulerAngles.z + -90);
-            if (isInverted)
-            {
-                weaponAngle = Quaternion.Euler(0, 0, projectileExit.eulerAngles.z + 90);
-            }
-            objectResolver.Instantiate(projectileActor, projectileExit.position, weaponAngle);
-            currentPlayerAmmo -= 1;
-            OnStatsChanged?.Invoke();
-        }
-
-        private void ResetWeaponPosition()
-        {
-            weaponRotation.transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
-
-        public void DamagePlayer(int damage)
-        {
-            if (playerSprites.Count > 0)
-            {
-                foreach (var sprite in playerSprites)
-                {
-                    sprite.DOColor(Color.red, 0.2f).OnComplete(() =>
-                    {
-                        sprite.DORewind();
-                    });
-                }
-            }
-
-            currentPlayerHealth -= damage;
-            OnStatsChanged?.Invoke();
-            if (currentPlayerHealth < 0)
-            {
-                KillPlayer();
-            }
-        }
-
-        private IEnumerator WaitAndLoadScene()
-        {
-            yield return new WaitForSeconds(4f);
-            sceneSystem.LoadScene(2);
-        }
-
-        public void KillPlayer()
-        {
-            foreach (Transform child in transform)
-            {
-                child.gameObject.SetActive(false);
-            }
-            animationController.ShowPlayerDeath();
-            isPlayerDead = true;
-            StartCoroutine(WaitAndLoadScene());
-        }
-
-        public void PushPlayer(Vector2 force)
-        {
-            rigidBody.AddForce(force, ForceMode2D.Impulse);
-        }
-
-        public void TrackCollectables(ColliderEnteredArgs args)
-        {
-            var collectible = args.Collider.GetComponentInParent<ICollectable>();
-            if (collectible == null)
-            {
-                return;
-            }
-            collectible.FallowPlayer(this);
-        }
-
-        public void UntrackCollectables(ColliderExitedArgs args)
-        {
-            var collectible = args.Collider.GetComponentInParent<ICollectable>();
-            if (collectible == null)
-            {
-                return;
-            }
-            collectible.FallowPlayer(null);
-        }
-
-        public void CollectItem(ColliderEnteredArgs args)
-        {
-            var collectible = args.Collider.GetComponentInParent<ICollectable>();
-            if (collectible == null)
-            {
-                return;
-            }
-            collectible.Collect(this);
-        }
 
         public bool IsPlayerDead => isPlayerDead;
 
@@ -337,13 +164,147 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Players
         public Action OnStatsChanged { get; set; }
         public Transform PlayerTransform => transform;
 
-        public void Move(Vector2 direction, float speed)
+        private void Awake()
+        {
+            playerInput = new SimplePlayerInput();
+            enemyTracker = new EnemyTracker(enemyTrigger);
+            animationController = new PlayerAnimationController(animator);
+            playerInverter = new PlayerRotation(transform);
+            currentPlayerHealth = maxPlayerHealth;
+
+            var allSprites = GetComponentsInChildren<SpriteRenderer>();
+            if (allSprites.Length != 0)
+            {
+                playerSprites.AddRange(allSprites);
+            }
+        }
+
+        private void Update()
+        {
+            if (!IsPlayerDead)
+            {
+                var playerDirection = playerInput.GetPlayerDirection();
+                animationController.UpdateAnimation(playerDirection, enemyTracker.GetClosestEnemy(), transform.position);
+                playerInverter.InvertPlayer(playerDirection, enemyTracker.GetClosestEnemy());
+                if (CurrentPlayerAmmo > 0)
+                {
+                    HandleWeaponFire(enemyTracker.GetClosestEnemy(), playerInverter.IsPlayerInverted);
+                }
+                else
+                {
+                    ResetWeaponPosition();
+                }
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            if (!IsPlayerDead)
+            {
+                var playerDirection = playerInput.GetPlayerDirection();
+                Move(playerDirection, moveSpeed);
+            }
+            else
+            {
+                Decelerate();
+            }
+        }
+
+        private void OnEnable()
+        {
+            enemyTracker.OnNoEnemiesLeft += ResetWeaponPosition;
+            playerBodyTrigger.OnTriggerEntered += CollectItem;
+            collectableTrigger.OnTriggerEntered += TrackCollectables;
+            collectableTrigger.OnTriggerExited += UntrackCollectables;
+        }
+        private void OnDisable()
+        {
+            enemyTracker.OnNoEnemiesLeft -= ResetWeaponPosition;
+            playerBodyTrigger.OnTriggerEntered -= CollectItem;
+            collectableTrigger.OnTriggerEntered -= TrackCollectables;
+            collectableTrigger.OnTriggerExited -= UntrackCollectables;
+        }
+
+        public void DamagePlayer(int damage)
+        {
+            if (playerSprites.Count > 0)
+            {
+                foreach (var sprite in playerSprites)
+                {
+                    sprite.DOColor(Color.red, 0.2f).OnComplete(() =>
+                    {
+                        sprite.DORewind();
+                    });
+                }
+            }
+
+            currentPlayerHealth -= damage;
+            OnStatsChanged?.Invoke();
+            if (currentPlayerHealth < 0)
+            {
+                KillPlayer();
+            }
+        }
+
+        public void KillPlayer()
+        {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(false);
+            }
+            animationController.ShowPlayerDeath();
+            isPlayerDead = true;
+            StartCoroutine(WaitAndLoadScene());
+        }
+
+        public void PushPlayer(Vector2 force)
+        {
+            rigidBody.AddForce(force, ForceMode2D.Impulse);
+        }
+
+        public void TrackCollectables(ColliderEnteredArgs args)
+        {
+            var collectible = args.Collider.GetComponentInParent<ICollectable>();
+            if (collectible == null)
+            {
+                return;
+            }
+            collectible.FallowPlayer(this);
+        }
+
+        public void UntrackCollectables(ColliderExitedArgs args)
+        {
+            var collectible = args.Collider.GetComponentInParent<ICollectable>();
+            if (collectible == null)
+            {
+                return;
+            }
+            collectible.FallowPlayer(null);
+        }
+
+        public void CollectItem(ColliderEnteredArgs args)
+        {
+            var collectible = args.Collider.GetComponentInParent<ICollectable>();
+            if (collectible == null)
+            {
+                return;
+            }
+            collectible.Collect(this);
+        }
+
+        private IEnumerator WaitAndLoadScene()
+        {
+            yield return new WaitForSeconds(4f);
+            sceneSystem.LoadScene(2);
+        }
+
+        private void Move(Vector2 direction, float speed)
         {
             var targetVelocity = direction.normalized * speed;
             rigidBody.velocity = Vector2.Lerp(rigidBody.velocity, targetVelocity, Time.fixedDeltaTime * 10f);
         }
 
-        public void Decelerate()
+        private void Decelerate()
         {
             if (rigidBody.velocity.magnitude > 0.01f)
             {
@@ -355,6 +316,49 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Players
                 rigidBody.velocity = Vector2.zero;
             }
         }
+
+        private void FireAtEnemy(bool isInverted)
+        {
+            var weaponAngle = Quaternion.Euler(0, 0, projectileExit.eulerAngles.z + -90);
+            if (isInverted)
+            {
+                weaponAngle = Quaternion.Euler(0, 0, projectileExit.eulerAngles.z + 90);
+            }
+            objectResolver.Instantiate(projectileActor, projectileExit.position, weaponAngle);
+            currentPlayerAmmo -= 1;
+            OnStatsChanged?.Invoke();
+        }
+
+        private void HandleWeaponFire(Transform enemyTransform, bool isPlayerInverted)
+        {
+            if (enemyTransform)
+            {
+                RotateGunArm(enemyTransform, isPlayerInverted);
+
+                if (Time.time >= lastShotTime + fireSpeed)
+                {
+                    FireAtEnemy(isPlayerInverted);
+                    lastShotTime = Time.time;
+                }
+            }
+        }
+
+        private void RotateGunArm(Transform enemyTransform, bool isInverted)
+        {
+            var direction = enemyTransform.position - weaponRotation.position;
+            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            if (isInverted)
+            {
+                angle += 180;
+            }
+            weaponRotation.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        }
+
+        private void ResetWeaponPosition()
+        {
+            weaponRotation.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+
     }
 }
 

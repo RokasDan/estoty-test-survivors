@@ -8,9 +8,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
 {
     internal sealed class ActorHealth : MonoBehaviour, ICollectable
     {
-        [Inject]
-        private CollectibleSystem system;
-
         [Min(1)]
         [SerializeField]
         private float collectableLifeTime = 20;
@@ -23,26 +20,15 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
         [SerializeField]
         private Rigidbody2D rigidBody;
 
+        [Inject]
+        private ICollectibleSystem system;
+
         private IActorPlayer actorPlayer;
         private float timer;
 
         private void Awake()
         {
             timer = collectableLifeTime;
-        }
-
-        public void Collect(IActorPlayer player)
-        {
-            if (this.actorPlayer != null)
-            {
-                this.actorPlayer.CurrentPlayerHealth += healthCount;
-                if (this.actorPlayer.CurrentPlayerHealth > this.actorPlayer.MaxPlayerHealth)
-                {
-                    this.actorPlayer.CurrentPlayerHealth = this.actorPlayer.MaxPlayerHealth;
-                }
-                this.actorPlayer.OnStatsChanged?.Invoke();
-            }
-            DestroyCollectable();
         }
 
         private void FixedUpdate()
@@ -60,13 +46,18 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
             CollectableSelfDestruct();
         }
 
-        public void CollectableSelfDestruct()
+        public void Collect(IActorPlayer player)
         {
-            timer -= Time.deltaTime;
-            if (timer <= 0)
+            if (this.actorPlayer != null)
             {
-                DestroyCollectable();
+                this.actorPlayer.CurrentPlayerHealth += healthCount;
+                if (this.actorPlayer.CurrentPlayerHealth > this.actorPlayer.MaxPlayerHealth)
+                {
+                    this.actorPlayer.CurrentPlayerHealth = this.actorPlayer.MaxPlayerHealth;
+                }
+                this.actorPlayer.OnStatsChanged?.Invoke();
             }
+            DestroyCollectable();
         }
 
         public void FallowPlayer(IActorPlayer player)
@@ -82,7 +73,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
 
         public void DestroyCollectable()
         {
-            if (system && system.ActiveCollectibles.Contains(this))
+            if (system != null && system.ActiveCollectibles.Contains(this))
             {
                 system.UntrackCollectables(this);
             }
@@ -95,6 +86,15 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
             if (rigidBody.velocity.magnitude < 0.1f)
             {
                 rigidBody.velocity = Vector2.zero;
+            }
+        }
+
+        private void CollectableSelfDestruct()
+        {
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+            {
+                DestroyCollectable();
             }
         }
     }

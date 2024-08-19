@@ -8,9 +8,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
 {
     internal sealed class ActorAmmo : MonoBehaviour, ICollectable
     {
-        [Inject]
-        private CollectibleSystem system;
-
         [Min(1)]
         [SerializeField]
         private int ammoCount = 1;
@@ -22,6 +19,9 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
         [Required]
         [SerializeField]
         private Rigidbody2D rigidBody;
+
+        [Inject]
+        private ICollectibleSystem system;
 
         private IActorPlayer actorPlayer;
         private float timer;
@@ -62,20 +62,11 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
 
         public void DestroyCollectable()
         {
-            if (system && system.ActiveCollectibles.Contains(this))
+            if (system != null && system.ActiveCollectibles.Contains(this))
             {
                 system.UntrackCollectables(this);
             }
             Destroy(gameObject);
-        }
-
-        public void CollectableSelfDestruct()
-        {
-            timer -= Time.deltaTime;
-            if (timer <= 0)
-            {
-                Destroy(gameObject);
-            }
         }
 
         public void Move(Vector2 direction, float speed)
@@ -90,6 +81,15 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Components.Collectables
             if (rigidBody.velocity.magnitude < 0.1f)
             {
                 rigidBody.velocity = Vector2.zero;
+            }
+        }
+
+        private void CollectableSelfDestruct()
+        {
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+            {
+                Destroy(gameObject);
             }
         }
     }

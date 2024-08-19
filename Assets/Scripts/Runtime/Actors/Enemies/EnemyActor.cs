@@ -13,15 +13,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
 {
     internal sealed class EnemyActor : MonoBehaviour, IEnemyActor
     {
-        [Inject]
-        private IEnemySystem enemySystem;
-
-        [Inject]
-        private IPlayerSystem playerSystem;
-
-        [Inject]
-        private CollectibleSystem collectibleSystem;
-
         [Required]
         [SerializeField]
         private Rigidbody2D rigidBody;
@@ -45,6 +36,15 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
         [Required]
         [SerializeField]
         private CollectibleTableData collectibleTable;
+
+        [Inject]
+        private IEnemySystem enemySystem;
+
+        [Inject]
+        private IPlayerSystem playerSystem;
+
+        [Inject]
+        private ICollectibleSystem collectibleSystem;
 
         private IActorPlayer actorPlayer;
         private float maxDistanceFromPlayer;
@@ -75,18 +75,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
             }
         }
 
-        private void OnEnable()
-        {
-            attackTrigger.OnTriggerEntered += DetectPlayer;
-            attackTrigger.OnTriggerExited += LosePlayer;
-        }
-
-        private void OnDestroy()
-        {
-            attackTrigger.OnTriggerEntered -= DetectPlayer;
-            attackTrigger.OnTriggerExited -= LosePlayer;
-        }
-
         private void Update()
         {
             if (actorPlayer is { IsPlayerDead: false } && enemyIsAlive)
@@ -111,19 +99,16 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
             EnemySelfDestruct();
         }
 
-        public void Move(Vector2 direction, float speed)
+        private void OnEnable()
         {
-            var targetVelocity = direction.normalized * speed;
-            rigidBody.velocity = Vector2.Lerp(rigidBody.velocity, targetVelocity, Time.fixedDeltaTime * 10f);
+            attackTrigger.OnTriggerEntered += DetectPlayer;
+            attackTrigger.OnTriggerExited += LosePlayer;
         }
 
-        public void Decelerate()
+        private void OnDisable()
         {
-            rigidBody.velocity = Vector2.Lerp(rigidBody.velocity, Vector2.zero, 15 * Time.deltaTime);
-            if (rigidBody.velocity.magnitude < 0.1f)
-            {
-                rigidBody.velocity = Vector2.zero;
-            }
+            attackTrigger.OnTriggerEntered -= DetectPlayer;
+            attackTrigger.OnTriggerExited -= LosePlayer;
         }
 
         public void DamageEnemy(int damage)
@@ -136,45 +121,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
             if (currentHealth < 0)
             {
                 KillEnemy();
-            }
-        }
-
-        private IEnumerator TimeDamage(int impactDamage ,int damagePerTick, float tickInterval, float duration)
-        {
-            var firstHit = true;
-            var elapsedTime = 0f;
-            while (elapsedTime < duration && currentHealth > 0)
-            {
-                if (firstHit)
-                {
-                    enemySprite.DOColor(Color.red, 0.2f).OnComplete(() =>
-                    {
-                        enemySprite.DORewind();
-                    });
-                    currentHealth -= impactDamage;
-                    if (currentHealth <= 0)
-                    {
-                        KillEnemy();
-                        yield break;
-                    }
-                    firstHit = false;
-                }
-                else
-                {
-                    enemySprite.DOColor(Color.green, 0.2f).OnComplete(() =>
-                    {
-                        enemySprite.DORewind();
-                    });
-                    currentHealth -= damagePerTick;
-                    if (currentHealth <= 0)
-                    {
-                        KillEnemy();
-                        yield break;
-                    }
-                }
-
-                yield return new WaitForSeconds(tickInterval);
-                elapsedTime += tickInterval;
             }
         }
 
@@ -266,6 +212,60 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
             {
                 bool playerOnRight = actorPlayer.PlayerTransform.position.x > transform.position.x;
                 enemySprite.flipX = !playerOnRight;
+            }
+        }
+
+        private IEnumerator TimeDamage(int impactDamage ,int damagePerTick, float tickInterval, float duration)
+        {
+            var firstHit = true;
+            var elapsedTime = 0f;
+            while (elapsedTime < duration && currentHealth > 0)
+            {
+                if (firstHit)
+                {
+                    enemySprite.DOColor(Color.red, 0.2f).OnComplete(() =>
+                    {
+                        enemySprite.DORewind();
+                    });
+                    currentHealth -= impactDamage;
+                    if (currentHealth <= 0)
+                    {
+                        KillEnemy();
+                        yield break;
+                    }
+                    firstHit = false;
+                }
+                else
+                {
+                    enemySprite.DOColor(Color.green, 0.2f).OnComplete(() =>
+                    {
+                        enemySprite.DORewind();
+                    });
+                    currentHealth -= damagePerTick;
+                    if (currentHealth <= 0)
+                    {
+                        KillEnemy();
+                        yield break;
+                    }
+                }
+
+                yield return new WaitForSeconds(tickInterval);
+                elapsedTime += tickInterval;
+            }
+        }
+
+        private void Move(Vector2 direction, float speed)
+        {
+            var targetVelocity = direction.normalized * speed;
+            rigidBody.velocity = Vector2.Lerp(rigidBody.velocity, targetVelocity, Time.fixedDeltaTime * 10f);
+        }
+
+        private void Decelerate()
+        {
+            rigidBody.velocity = Vector2.Lerp(rigidBody.velocity, Vector2.zero, 15 * Time.deltaTime);
+            if (rigidBody.velocity.magnitude < 0.1f)
+            {
+                rigidBody.velocity = Vector2.zero;
             }
         }
     }

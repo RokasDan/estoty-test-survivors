@@ -18,6 +18,8 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
         [Inject]
         private readonly IEnemySystem enemySystem;
 
+        public int CurrentPlayerLevel { get; private set; } = 1;
+
         public void PlayerLevelUp()
         {
             CurrentPlayerLevel++;
@@ -66,7 +68,5 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
             enemySystem.MaxEnemyCount += settings.additionalEnemies;
             enemySystem.EnemySpawnRate *= settings.spawnRateModifier;
         }
-
-        public int CurrentPlayerLevel { get; private set; } = 1;
     }
 }

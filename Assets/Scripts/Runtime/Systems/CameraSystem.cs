@@ -17,6 +17,14 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
 
         private Vector3 velocity = Vector3.zero;
 
+        private void FixedUpdate()
+        {
+            if (playerSystem.TryGetPlayer(out var player))
+            {
+                FollowPlayer(player);
+            }
+        }
+
         public void FollowPlayer(IActorPlayer actorPlayer)
         {
             var playerPosition = actorPlayer.PlayerTransform.position;
@@ -34,14 +42,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
 
             targetCamera = mainCamera;
             return true;
-        }
-
-        private void FixedUpdate()
-        {
-            if (playerSystem.TryGetPlayer(out var player))
-            {
-                FollowPlayer(player);
-            }
         }
 
         public Vector2 GetOutsideCameraPosition(int offset)

@@ -8,12 +8,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
 {
     internal sealed class CanvasSystem : MonoBehaviour, ICanvasSystem
     {
-        [Inject]
-        private IPlayerSystem playerSystem;
-
-        [Inject]
-        private LevelSystem levelUpSystem;
-
         [Required]
         [SerializeField]
         private Slider healthSlider;
@@ -34,6 +28,13 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
         [SerializeField]
         private Text levelText;
 
+        [Inject]
+        private IPlayerSystem playerSystem;
+
+        [Inject]
+        private ILevelSystem levelUpSystem;
+
+
         private IActorPlayer actorPlayer;
 
         private void Start()
@@ -49,15 +50,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
         private void OnDestroy()
         {
             actorPlayer.OnStatsChanged -= UpdatePlayerStats;
-        }
-
-        private void UpdatePlayerStats()
-        {
-            UpdateHealth(actorPlayer.CurrentPlayerHealth, actorPlayer.MaxPlayerHealth);
-            UpdateExperience(actorPlayer.CurrentPlayerExperience, actorPlayer.MaxPlayerExperience);
-            UpdateKillCount(actorPlayer.CurrentScoreCount);
-            UpdatedBulletCount(actorPlayer.CurrentPlayerAmmo);
-            UpdatedLevelCount(levelUpSystem.CurrentPlayerLevel);
         }
 
         public void UpdateHealth(int currentHealth, int maxHealth)
@@ -85,6 +77,15 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
         public void UpdatedLevelCount(int level)
         {
             levelText.text = "Lv." + level;
+        }
+
+        private void UpdatePlayerStats()
+        {
+            UpdateHealth(actorPlayer.CurrentPlayerHealth, actorPlayer.MaxPlayerHealth);
+            UpdateExperience(actorPlayer.CurrentPlayerExperience, actorPlayer.MaxPlayerExperience);
+            UpdateKillCount(actorPlayer.CurrentScoreCount);
+            UpdatedBulletCount(actorPlayer.CurrentPlayerAmmo);
+            UpdatedLevelCount(levelUpSystem.CurrentPlayerLevel);
         }
     }
 }

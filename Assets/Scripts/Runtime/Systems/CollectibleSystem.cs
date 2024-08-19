@@ -13,14 +13,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
         private IObjectResolver objectResolver;
         private readonly List<ICollectable> activeCollectables = new List<ICollectable>();
 
-        private Vector2 RandomizeSpawnPosition (Vector2 center, float radius)
-        {
-            var angle = Random.Range(0f, Mathf.PI * 2);
-            var distance = Random.Range(0f, radius);
-            var x = center.x + distance * Mathf.Cos(angle);
-            var y = center.y + distance * Mathf.Sin(angle);
-            return new Vector2(x, y);
-        }
+        public List<ICollectable> ActiveCollectibles => activeCollectables;
 
         public void SpawnCollectables(CollectibleTableData collectibleTable, Vector2 position, float spreadRadius)
         {
@@ -65,6 +58,13 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
             }
         }
 
-        public List<ICollectable> ActiveCollectibles => activeCollectables;
+        private Vector2 RandomizeSpawnPosition (Vector2 center, float radius)
+        {
+            var angle = Random.Range(0f, Mathf.PI * 2);
+            var distance = Random.Range(0f, radius);
+            var x = center.x + distance * Mathf.Cos(angle);
+            var y = center.y + distance * Mathf.Sin(angle);
+            return new Vector2(x, y);
+        }
     }
 }

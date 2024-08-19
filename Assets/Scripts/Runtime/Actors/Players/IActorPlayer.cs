@@ -1,12 +1,11 @@
 ﻿using System;
 using RokasDan.EstotyTestSurvivors.Runtime.Actors.Projectiles;
-using RokasDan.EstotyTestSurvivors.Runtime.Components.Locomotion;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Triggers;
 using UnityEngine;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Players
 {
-    internal interface IActorPlayer: IMovement
+    internal interface IActorPlayer
     {
         public void DamagePlayer(int damage);
         public void KillPlayer();

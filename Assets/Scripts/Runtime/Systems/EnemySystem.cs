@@ -21,11 +21,19 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
         private int maxEnemyCount;
         private readonly List<IEnemyActor> aliveEnemies = new List<IEnemyActor>();
 
-        public EnemySystem(EnemySystemSettings enemySystemSettings, ICameraSystem cameraSystem)
+        public int MaxEnemyCount
         {
-            this.enemySystemSettings = enemySystemSettings;
-            this.cameraSystem = cameraSystem;
+            get => maxEnemyCount;
+            set => maxEnemyCount = value;
         }
+
+        public float EnemySpawnRate
+        {
+            get => enemySpawnRate;
+            set => enemySpawnRate = value;
+        }
+
+        public List<IEnemyActor> AliveEnemies => aliveEnemies;
 
         public void Start()
         {
@@ -44,6 +52,12 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
                 SpawnEnemy(enemyPrefab);
                 spawnTimer = enemySpawnRate;
             }
+        }
+
+        public EnemySystem(EnemySystemSettings enemySystemSettings, ICameraSystem cameraSystem)
+        {
+            this.enemySystemSettings = enemySystemSettings;
+            this.cameraSystem = cameraSystem;
         }
 
         public void SpawnEnemy(EnemyActor enemyPrefab)
@@ -87,19 +101,5 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
             }
             return enemyPrefabs.FirstOrDefault();
         }
-
-        public int MaxEnemyCount
-        {
-            get => maxEnemyCount;
-            set => maxEnemyCount = value;
-        }
-
-        public float EnemySpawnRate
-        {
-            get => enemySpawnRate;
-            set => enemySpawnRate = value;
-        }
-
-        public List<IEnemyActor> AliveEnemies => aliveEnemies;
     }
 }

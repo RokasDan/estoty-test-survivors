@@ -1,12 +1,11 @@
 ﻿using RokasDan.EstotyTestSurvivors.Runtime.Actors.Players;
-using RokasDan.EstotyTestSurvivors.Runtime.Components.Locomotion;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Triggers;
 using RokasDan.EstotyTestSurvivors.Runtime.Systems;
 using UnityEngine;
 
 namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
 {
-    internal interface IEnemyActor: IMovement
+    internal interface IEnemyActor
     {
         public void DamageEnemy(int damage);
         public void DamageOverTime(int impactDamage, int tickDamage, float tickInterval, float duration);

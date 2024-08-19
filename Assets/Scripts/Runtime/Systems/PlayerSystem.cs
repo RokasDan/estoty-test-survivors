@@ -9,14 +9,12 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
 {
     internal sealed class PlayerSystem : MonoBehaviour, IPlayerSystem, IStartable
     {
-        [Inject]
-        private IObjectResolver objectResolver;
-
-        [FormerlySerializedAs("playerActorPrefab")]
         [Required]
         [SerializeField]
         private ActorPlayer actorPlayerPrefab;
 
+        [Inject]
+        private IObjectResolver objectResolver;
         private ActorPlayer actorPlayerInstance;
 
         public void Start()
