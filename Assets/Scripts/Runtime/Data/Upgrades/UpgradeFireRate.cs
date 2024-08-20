@@ -9,13 +9,18 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Data.Upgrades
     internal sealed class UpgradeFireRate : ScriptableObject, IPlayerUpgrade
     {
         [Range(0f, 1f)]
-        public float upgradeChance = 1;
+        [SerializeField]
+        private float upgradeChance = 1;
 
         [Range(0f, 1f)]
-        public float fireRateModifier = 1;
+        [SerializeField]
+        private float fireRateModifier = 1;
 
         [Required]
-        public LevelUpText upgradeText;
+        [SerializeField]
+        private LevelUpText upgradeText;
+
+        public float UpgradeChance => upgradeChance;
 
         public void Apply(IActorPlayer actorPlayer)
         {
@@ -24,6 +29,5 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Data.Upgrades
             actorPlayer.PlayerFireRate *= fireRateModifier;
         }
 
-        public float UpgradeChance => upgradeChance;
     }
 }

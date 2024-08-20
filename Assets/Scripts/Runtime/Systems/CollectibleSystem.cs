@@ -19,13 +19,13 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
         {
             foreach (var collectible in collectibleTable.collectibles)
             {
-                if (Random.value <= collectible.dropChance)
+                if (Random.value <= collectible.DropChance)
                 {
-                    int quantity = Random.Range(collectible.minQuantity, collectible.maxQuantity + 1);
+                    int quantity = Random.Range(collectible.MinQuantity, collectible.maxQuantity + 1);
                     for (int i = 0; i < quantity; i++)
                     {
                         var randomPosition = RandomizeSpawnPosition(position, spreadRadius);
-                        var instantiatedPrefab = objectResolver.Instantiate(collectible.collectiblePrefab, randomPosition, Quaternion.identity);
+                        var instantiatedPrefab = objectResolver.Instantiate(collectible.CollectiblePrefab, randomPosition, Quaternion.identity);
                         var spawnedCollectible = instantiatedPrefab.GetComponent<ICollectable>();
                         if (spawnedCollectible != null)
                         {

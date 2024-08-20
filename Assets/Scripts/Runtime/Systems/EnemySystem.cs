@@ -13,11 +13,14 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
 
         [Inject]
         private IObjectResolver objectResolver;
+
         private readonly EnemySystemSettings enemySystemSettings;
         private readonly ICameraSystem cameraSystem;
+
         private int spawnAreaOffset;
         private float enemySpawnRate;
         private float spawnTimer;
+
         private int maxEnemyCount;
         private readonly List<IEnemyActor> aliveEnemies = new List<IEnemyActor>();
 
@@ -37,9 +40,9 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
 
         public void Start()
         {
-            spawnAreaOffset = enemySystemSettings.spawnAreaOffset;
-            enemySpawnRate = enemySystemSettings.enemySpawnRate;
-            maxEnemyCount = enemySystemSettings.initialEnemyCount;
+            spawnAreaOffset = enemySystemSettings.SpawnAreaOffset;
+            enemySpawnRate = enemySystemSettings.EnemySpawnRate;
+            maxEnemyCount = enemySystemSettings.InitialEnemyCount;
             spawnTimer = enemySpawnRate;
         }
 
@@ -83,7 +86,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
 
         public EnemyActor GetEnemyPrefab()
         {
-            var enemyPrefabs = enemySystemSettings.enemyPrefabs;
+            var enemyPrefabs = enemySystemSettings.EnemyPrefabs;
             if (enemyPrefabs.Count == 1)
             {
                 return enemyPrefabs.FirstOrDefault();

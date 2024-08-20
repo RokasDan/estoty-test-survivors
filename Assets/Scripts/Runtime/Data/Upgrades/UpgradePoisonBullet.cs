@@ -10,16 +10,22 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Data.Upgrades
     internal sealed class UpgradePoisonBullet : ScriptableObject, IPlayerUpgrade
     {
         [Range(0f, 1f)]
-        public float upgradeChance = 1;
+        [SerializeField]
+        private float upgradeChance = 1;
 
         [Range(1f, 2f)]
-        public float damageTimeModifier = 1;
+        [SerializeField]
+        private float damageTimeModifier = 1;
 
         [Required]
-        public PoisonProjectileActor poisonProjectileActor;
+        [SerializeField]
+        private PoisonProjectileActor poisonProjectileActor;
 
         [Required]
-        public LevelUpText upgradeText;
+        [SerializeField]
+        private LevelUpText upgradeText;
+
+        public float UpgradeChance => upgradeChance;
 
         public void Apply(IActorPlayer actorPlayer)
         {
@@ -38,6 +44,5 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Data.Upgrades
             }
         }
 
-        public float UpgradeChance => upgradeChance;
     }
 }

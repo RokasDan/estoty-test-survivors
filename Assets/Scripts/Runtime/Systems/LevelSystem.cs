@@ -57,7 +57,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
                         break;
                     }
                 }
-                playerActor.MaxPlayerExperience += settings.addMaxLevelCeiling;
+                playerActor.MaxPlayerExperience += settings.AddMaxLevelCeiling;
                 selectedUpgrade?.Apply(playerActor);
                 playerActor.OnStatsChanged.Invoke();
             }
@@ -65,8 +65,8 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
 
         private void ScaleEnemySystem()
         {
-            enemySystem.MaxEnemyCount += settings.additionalEnemies;
-            enemySystem.EnemySpawnRate *= settings.spawnRateModifier;
+            enemySystem.MaxEnemyCount += settings.AdditionalEnemies;
+            enemySystem.EnemySpawnRate *= settings.SpawnRateModifier;
         }
     }
 }

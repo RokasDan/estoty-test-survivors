@@ -9,13 +9,18 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Data.Upgrades
     internal sealed class UpgradeMaxHealth : ScriptableObject, IPlayerUpgrade
     {
         [Range(0f, 1f)]
-        public float upgradeChange = 1;
+        [SerializeField]
+        private float upgradeChange = 1;
 
         [Min(1)]
-        public int additionalPoints;
+        [SerializeField]
+        private int additionalPoints;
 
         [Required]
-        public LevelUpText upgradeText;
+        [SerializeField]
+        private LevelUpText upgradeText;
+
+        public float UpgradeChance => upgradeChange;
 
         public void Apply(IActorPlayer actorPlayer)
         {
@@ -24,6 +29,5 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Data.Upgrades
             actorPlayer.MaxPlayerHealth += additionalPoints;
         }
 
-        public float UpgradeChance => upgradeChange;
     }
 }

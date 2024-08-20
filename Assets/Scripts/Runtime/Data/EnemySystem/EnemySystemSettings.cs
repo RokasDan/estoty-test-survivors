@@ -9,12 +9,43 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Data.EnemySystem
     internal sealed class EnemySystemSettings : ScriptableObject
     {
         [Required]
-        public List<EnemyActor> enemyPrefabs;
+        [SerializeField]
+        private List<EnemyActor> enemyPrefabs;
+
         [Min(0f)]
-        public int spawnAreaOffset = 0;
+        [SerializeField]
+        private int spawnAreaOffset = 0;
+
         [Min(0f)]
-        public float enemySpawnRate = 1;
+        [SerializeField]
+        private float enemySpawnRate = 1;
+
         [Min(1)]
-        public int initialEnemyCount = 1;
+        [SerializeField]
+        private int initialEnemyCount = 1;
+
+        public List<EnemyActor> EnemyPrefabs
+        {
+            get { return enemyPrefabs; }
+            set { enemyPrefabs = value; }
+        }
+
+        public int SpawnAreaOffset
+        {
+            get { return spawnAreaOffset; }
+            set { spawnAreaOffset = value; }
+        }
+
+        public float EnemySpawnRate
+        {
+            get { return enemySpawnRate; }
+            set { enemySpawnRate = value; }
+        }
+
+        public int InitialEnemyCount
+        {
+            get { return initialEnemyCount; }
+            set { initialEnemyCount = value; }
+        }
     }
 }

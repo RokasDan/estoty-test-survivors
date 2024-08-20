@@ -8,15 +8,36 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Data.LevelSystem
     internal sealed class LevelSystemSettings : ScriptableObject
     {
         [Min(0)]
-        public int addMaxLevelCeiling;
+        [SerializeField]
+        private int addMaxLevelCeiling;
 
         [Min(0)]
-        public int additionalEnemies;
+        [SerializeField]
+        private int additionalEnemies;
 
         [Range(0f, 1f)]
-        public float spawnRateModifier = 1;
+        [SerializeField]
+        private float spawnRateModifier = 1;
 
         public List<ScriptableObject> playerUpgrades;
+
+        public int AddMaxLevelCeiling
+        {
+            get { return addMaxLevelCeiling; }
+            set { addMaxLevelCeiling = value; }
+        }
+
+        public int AdditionalEnemies
+        {
+            get { return additionalEnemies; }
+            set { additionalEnemies = value; }
+        }
+
+        public float SpawnRateModifier
+        {
+            get { return spawnRateModifier; }
+            set { spawnRateModifier = value; }
+        }
 
         public List<IPlayerUpgrade> GetUpgrades()
         {
