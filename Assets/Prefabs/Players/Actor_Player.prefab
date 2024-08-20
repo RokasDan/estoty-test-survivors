@@ -639,16 +639,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df7398221304f6289511833630b9c55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: 600848d676fd7aa44818d8f2c764573a, type: 2}
   rigidBody: {fileID: 4491513928397541927}
-  moveSpeed: 3
   enemyTrigger: {fileID: 3290261619846968371}
   playerBodyTrigger: {fileID: 5772265358069828567}
   collectableTrigger: {fileID: 265918684990201257}
+  projectileActor: {fileID: 6218228148913193624, guid: 6cdb4206f7b76824783eb995c0c4c3ee, type: 3}
   projectileExit: {fileID: 2782720226039578702}
   weaponRotation: {fileID: 8891325664579815492}
-  fireSpeed: 2
   animator: {fileID: 3553675480035923588}
-  projectileActor: {fileID: 6218228148913193624, guid: 6cdb4206f7b76824783eb995c0c4c3ee, type: 3}
 --- !u!95 &3553675480035923588
 Animator:
   serializedVersion: 5

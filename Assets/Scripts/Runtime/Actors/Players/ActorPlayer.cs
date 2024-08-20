@@ -10,6 +10,7 @@ using RokasDan.EstotyTestSurvivors.Runtime.Components.Input;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Rotation;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Tracking;
 using RokasDan.EstotyTestSurvivors.Runtime.Components.Triggers;
+using RokasDan.EstotyTestSurvivors.Runtime.Data.Players;
 using RokasDan.EstotyTestSurvivors.Runtime.Systems;
 using UnityEngine;
 using VContainer;
@@ -19,13 +20,16 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Players
 {
     internal sealed class ActorPlayer : MonoBehaviour, IActorPlayer
     {
+        [Header("Player Data")]
+        [Required]
+        [SerializeField]
+        private PlayerData playerData;
+
         [Required]
         [SerializeField]
         private Rigidbody2D rigidBody;
 
-        [SerializeField]
-        private float moveSpeed = 5f;
-
+        [Header("Triggers")]
         [Required]
         [SerializeField]
         private ColliderTrigger enemyTrigger;
@@ -38,6 +42,11 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Players
         [SerializeField]
         private ColliderTrigger collectableTrigger;
 
+        [Header("Weapon settings")]
+        [Required]
+        [SerializeField]
+        private BaseProjectileActor projectileActor;
+
         [Required]
         [SerializeField]
         private Transform projectileExit;
@@ -46,16 +55,10 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Players
         [SerializeField]
         private Transform weaponRotation;
 
-        [SerializeField]
-        private float fireSpeed = 2;
-
+        [Header("Animation")]
         [Required]
         [SerializeField]
         private Animator animator;
-
-        [Required]
-        [SerializeField]
-        private BaseProjectileActor projectileActor;
 
         [Inject]
         private IObjectResolver objectResolver;
@@ -68,21 +71,20 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Players
         private IPlayerAnimationController animationController;
         private IPlayerRotation playerInverter;
 
-        private int currentPlayerAmmo = 20;
-        private int maxPlayerHealth = 10;
-        private int currentPlayerHealth = 0;
+        private float moveSpeed;
+        private float fireSpeed;
+        private int currentPlayerAmmo;
 
-        private int maxPlayerExperience = 15;
-        private int currentPlayerExperience = 0;
+        private int maxPlayerHealth;
+        private int currentPlayerHealth;
 
-        private int currentPlayerLevel = 0;
-        private int currentPlayerScore = 0;
+        private int maxPlayerExperience;
+        private int currentPlayerExperience;
+        private int currentPlayerScore;
 
-        private float itemPickupSpeed = 2;
-        private int playerDamage = 1;
-        private float playerPushForce = 15;
+        private float itemPickupSpeed;
 
-        private List<SpriteRenderer> playerSprites = new List<SpriteRenderer>();
+        private readonly List<SpriteRenderer> playerSprites = new();
 
         private float lastShotTime;
         private bool isPlayerDead;
@@ -113,18 +115,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Players
             set => currentPlayerExperience = value;
         }
 
-        public int CurrentPlayerLevel
-        {
-            get => currentPlayerLevel;
-            set => currentPlayerLevel = value;
-        }
-
-        public int CurrentPlayerDamage
-        {
-            get => playerDamage;
-            set => playerDamage = value;
-        }
-
         public int CurrentPlayerAmmo
         {
             get => currentPlayerAmmo;
@@ -135,12 +125,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Players
         {
             get => currentPlayerScore;
             set => currentPlayerScore = value;
-        }
-
-        public float PlayerPushForce
-        {
-            get => playerPushForce;
-            set => playerPushForce = value;
         }
 
         public float PlayerSpeed
@@ -170,7 +154,17 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Players
             enemyTracker = new EnemyTracker(enemyTrigger);
             animationController = new PlayerAnimationController(animator);
             playerInverter = new PlayerRotation(transform);
-            currentPlayerHealth = maxPlayerHealth;
+
+            maxPlayerHealth = playerData.MaxPlayerHealth;
+            currentPlayerHealth = playerData.MaxPlayerHealth;
+
+            moveSpeed = playerData.PlayerWalkSpeed;
+            fireSpeed = playerData.PlayerFireRate;
+            currentPlayerAmmo = playerData.CurrentPlayerAmmo;
+            maxPlayerExperience = playerData.MaxPlayerExperience;
+
+            enemyTrigger.CircleCollider.radius = playerData.PlayerFireRange;
+            collectableTrigger.CircleCollider.radius = playerData.PlayerCollectionRange;
 
             var allSprites = GetComponentsInChildren<SpriteRenderer>();
             if (allSprites.Length != 0)

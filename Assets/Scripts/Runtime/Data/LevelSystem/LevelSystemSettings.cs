@@ -8,10 +8,10 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Data.LevelSystem
     internal sealed class LevelSystemSettings : ScriptableObject
     {
         [Min(0)]
-        public int addMaxLevelCeiling = 0;
+        public int addMaxLevelCeiling;
 
         [Min(0)]
-        public int additionalEnemies = 0;
+        public int additionalEnemies;
 
         [Range(0f, 1f)]
         public float spawnRateModifier = 1;
