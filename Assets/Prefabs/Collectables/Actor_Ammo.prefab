@@ -161,6 +161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecd9e1ebd7124afca5a61b9a3a4a2620, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoCount: 50
+  ammoCount: 20
   collectibleLifetime: 20
   rigidBody: {fileID: 1268317437528561588}
