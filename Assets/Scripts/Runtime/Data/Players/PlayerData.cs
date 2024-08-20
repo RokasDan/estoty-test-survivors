@@ -5,6 +5,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Data.Players
     [CreateAssetMenu(fileName = "New PlayerData", menuName = "Players/PlayerData")]
     internal sealed class PlayerData : ScriptableObject
     {
+        [Header("General")]
         [Min(1)]
         [SerializeField]
         private int maxPlayerHealth = 1;
@@ -25,6 +26,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Data.Players
         [SerializeField]
         private int maxPlayerExperience = 1;
 
+        [Header("Triggers")]
         [Min(0.1f)]
         [SerializeField]
         private float playerFireRange = 1;

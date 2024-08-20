@@ -20,6 +20,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Data.LootTables
             [SerializeField]
             private float dropChance = 1f;
 
+            [Header("Quantity")]
             [Min(1)]
             [SerializeField]
             private int minQuantity = 1;

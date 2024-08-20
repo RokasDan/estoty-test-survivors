@@ -8,6 +8,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
 {
     internal sealed class CanvasSystem : MonoBehaviour, ICanvasSystem
     {
+        [Header("Sliders")]
         [Required]
         [SerializeField]
         private Slider healthSlider;
@@ -16,6 +17,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
         [SerializeField]
         private Slider experienceSlider;
 
+        [Header("Text")]
         [Required]
         [SerializeField]
         private Text scoreText;
@@ -52,29 +54,29 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Systems
             actorPlayer.OnStatsChanged -= UpdatePlayerStats;
         }
 
-        public void UpdateHealth(int currentHealth, int maxHealth)
+        private void UpdateHealth(int currentHealth, int maxHealth)
         {
             healthSlider.maxValue = maxHealth;
             healthSlider.value = currentHealth;
         }
 
-        public void UpdateExperience(int currentExperience, int maxExperience)
+        private void UpdateExperience(int currentExperience, int maxExperience)
         {
             experienceSlider.maxValue = maxExperience;
             experienceSlider.value = currentExperience;
         }
 
-        public void UpdateKillCount(int count)
+        private void UpdateKillCount(int count)
         {
             scoreText.text = count.ToString();
         }
 
-        public void UpdatedBulletCount(int bullets)
+        private void UpdatedBulletCount(int bullets)
         {
             bulletText.text = bullets.ToString();
         }
 
-        public void UpdatedLevelCount(int level)
+        private void UpdatedLevelCount(int level)
         {
             levelText.text = "Lv." + level;
         }
