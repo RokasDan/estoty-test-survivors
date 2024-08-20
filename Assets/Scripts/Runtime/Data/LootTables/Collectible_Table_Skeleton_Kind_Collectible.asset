@@ -18,14 +18,14 @@ MonoBehaviour:
     minQuantity: 10
     maxQuantity: 10
   - collectiblePrefab: {fileID: 8384593376701562610, guid: af0caa91c5fc9e14ca8c117e4f64bd74, type: 3}
-    dropChance: 0.56
-    minQuantity: 5
-    maxQuantity: 7
+    dropChance: 0.313
+    minQuantity: 2
+    maxQuantity: 4
   - collectiblePrefab: {fileID: 6652407020408288854, guid: ca36d0c228ff8af49b572836482de376, type: 3}
-    dropChance: 0.497
-    minQuantity: 3
-    maxQuantity: 5
+    dropChance: 0.333
+    minQuantity: 2
+    maxQuantity: 4
   - collectiblePrefab: {fileID: 1494089556562441504, guid: 2b662ba51794ef84fb16fa77f6cc6498, type: 3}
-    dropChance: 0.23
+    dropChance: 0.261
     minQuantity: 3
     maxQuantity: 3

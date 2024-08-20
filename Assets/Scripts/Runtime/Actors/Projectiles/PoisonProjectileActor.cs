@@ -14,10 +14,6 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Projectiles
         [SerializeField]
         public float damageInterval = 1;
 
-        [Min(1)]
-        [SerializeField]
-        public int damagePerTick = 1;
-
         public override void DamageEnemy(ColliderEnteredArgs args)
         {
             var enemyActor = args.Collider.GetComponentInParent<IEnemyActor>();
@@ -27,7 +23,7 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Projectiles
             }
             var pushDirection = (enemyActor.EnemyTransform.position - transform.position).normalized;
             enemyActor.PushEnemy(pushDirection * pushForce);
-            enemyActor.DamageOverTime(projectileDamage, damagePerTick, damageInterval, damageDuration);
+            enemyActor.DamageOverTime(projectileDamage, damageInterval, damageDuration);
             Destroy(gameObject);
         }
     }

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Actor_Player_Data
   m_EditorClassIdentifier: 
   maxPlayerHealth: 15
-  playerFireRate: 0.7
+  playerFireRate: 0.72
   playerWalkSpeed: 3
   currentPlayerAmmo: 30
   maxPlayerExperience: 10
-  playerFireRange: 3
-  playerCollectionRange: 2
+  playerFireRange: 4.5
+  playerCollectionRange: 3

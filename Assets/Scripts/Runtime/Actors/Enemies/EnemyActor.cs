@@ -124,9 +124,9 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
             }
         }
 
-        public void DamageOverTime(int impactDamage, int tickDamage, float tickInterval, float duration)
+        public void DamageOverTime(int tickDamage, float tickInterval, float duration)
         {
-            StartCoroutine(TimeDamage(impactDamage, tickDamage, tickInterval, duration));
+            StartCoroutine(TimeDamage(tickDamage, tickInterval, duration));
         }
 
         public void KillEnemy()
@@ -215,38 +215,20 @@ namespace RokasDan.EstotyTestSurvivors.Runtime.Actors.Enemies
             }
         }
 
-        private IEnumerator TimeDamage(int impactDamage ,int damagePerTick, float tickInterval, float duration)
+        private IEnumerator TimeDamage(int damagePerTick, float tickInterval, float duration)
         {
-            var firstHit = true;
             var elapsedTime = 0f;
             while (elapsedTime < duration && currentHealth > 0)
             {
-                if (firstHit)
+                enemySprite.DOColor(Color.green, 0.2f).OnComplete(() =>
                 {
-                    enemySprite.DOColor(Color.red, 0.2f).OnComplete(() =>
-                    {
-                        enemySprite.DORewind();
-                    });
-                    currentHealth -= impactDamage;
-                    if (currentHealth <= 0)
-                    {
-                        KillEnemy();
-                        yield break;
-                    }
-                    firstHit = false;
-                }
-                else
+                    enemySprite.DORewind();
+                });
+                currentHealth -= damagePerTick;
+                if (currentHealth <= 0)
                 {
-                    enemySprite.DOColor(Color.green, 0.2f).OnComplete(() =>
-                    {
-                        enemySprite.DORewind();
-                    });
-                    currentHealth -= damagePerTick;
-                    if (currentHealth <= 0)
-                    {
-                        KillEnemy();
-                        yield break;
-                    }
+                    KillEnemy();
+                    yield break;
                 }
 
                 yield return new WaitForSeconds(tickInterval);

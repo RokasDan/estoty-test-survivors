@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectibles:
   - collectiblePrefab: {fileID: 8384593376701562610, guid: af0caa91c5fc9e14ca8c117e4f64bd74, type: 3}
-    dropChance: 0.5
+    dropChance: 0.112
     minQuantity: 1
     maxQuantity: 2
   - collectiblePrefab: {fileID: 910969115733995407, guid: 84ac51d455da077429710d1680e487bc, type: 3}
-    dropChance: 0.5
+    dropChance: 0.918
     minQuantity: 2
     maxQuantity: 3

@@ -131,9 +131,8 @@ MonoBehaviour:
   pushForce: 15
   projectileLifeTime: 10
   enemyTrigger: {fileID: 634366397509696694}
-  damageDuration: 4.8
+  damageDuration: 9.953281
   damageInterval: 1.06
-  damagePerTick: 1
 --- !u!1 &7122783763637605158
 GameObject:
   m_ObjectHideFlags: 0
